@@ -129,7 +129,7 @@ void main(){
       const end = +el.dataset.count, pre = el.dataset.pre || "", suf = el.dataset.suf || "";
       const run = () => {
         const t0 = performance.now(), d = 1600;
-        const step = (n) => { const k = Math.min(1, (n - t0) / d), e = 1 - Math.pow(1 - k, 4); el.textContent = pre + Math.round(end * e) + suf; if (k < 1) requestAnimationFrame(step); };
+        const step = (n) => { const k = Math.max(0, Math.min(1, (n - t0) / d)), e = 1 - Math.pow(1 - k, 4); el.textContent = pre + Math.round(end * e) + suf; if (k < 1) requestAnimationFrame(step); };
         requestAnimationFrame(step);
       };
       if (calm) { el.textContent = pre + end + suf; return; }
