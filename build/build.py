@@ -171,7 +171,7 @@ def footer():
 <div><h4>Serviços</h4><ul>{svc}</ul></div>
 </div>
 <div class="big-word" aria-hidden="true">Flateka</div>
-<div class="copyright"><span>© <span id="year">2026</span> Flateka. Nova Iguaçu, RJ.</span><button data-copy="https://flateka.web.app" data-msg="Link copiado" class="muted" style="text-decoration:underline;text-underline-offset:3px">Copiar link do site</button></div>
+<div class="copyright"><span>© <span id="year">2026</span> Flateka. Nova Iguaçu, RJ.</span><button data-copy="https://flateka-b2653.web.app" data-msg="Link copiado" class="muted" style="text-decoration:underline;text-underline-offset:3px">Copiar link do site</button></div>
 </div></footer>
 <button class="totop" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/></svg>{ico("arrow")}</button>
 <div class="mbar"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">{ico("wa")} Agendar conversa pelo WhatsApp</a></div>
