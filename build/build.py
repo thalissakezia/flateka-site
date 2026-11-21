@@ -101,6 +101,10 @@ SERVICES = {
 }
 
 
+import hashlib
+VER = hashlib.md5((ROOT / "assets/css/style.css").read_bytes() + (ROOT / "assets/js/main.js").read_bytes()).hexdigest()[:8]
+
+
 def head(title, desc):
     return _head(title, desc).replace("LOGOMARK", LOGO)
 
@@ -121,7 +125,7 @@ def _head(title, desc):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=__VER__">
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas><div class="grain" aria-hidden="true"></div>
@@ -171,7 +175,7 @@ def footer():
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=__VER__" defer></script>
 </body>
 </html>
 '''
@@ -386,7 +390,7 @@ def index():
 </div></div></div></section>
 
 <section class="section"><div class="wrap">
-<div class="sec-head"><div><span class="eyebrow">Para quem é</span><h2 class="split">Feito para o comércio da região</h2></div>
+<div class="sec-head"><div><span class="eyebrow">Para quem é</span><h2 class="split">Feito para todo tipo de negócio</h2></div>
 <p class="muted rv" style="max-width:340px">Arraste para o lado ou use as setas.</p></div></div>
 <div class="carousel rv"><button class="car-arrow l" aria-label="Voltar"><span>{ico("left")}</span></button><div class="car-view"><div class="car-track">
 {"".join(f'<div class="car-item"><div class="im skel"><img src="{u(P[k], 700)}" alt="" draggable="false"></div><div class="tx"><small>{a}</small><b>{b}</b></div></div>' for k, a, b in [
@@ -395,7 +399,7 @@ def index():
     ("moda", "Lojas de roupa", "Catálogo e pedidos pelo WhatsApp"),
     ("cozinha", "Restaurantes", "Cardápio e pedidos respondidos na hora"),
     ("pacote", "Lojas online", "Saber o que vende e o que encalha"),
-    ("fruta", "Comércio de bairro", "Aparecer no Google Maps da região"),
+    ("fruta", "Comércio de rua", "Aparecer no Google Maps para quem está perto"),
     ("dash2", "Escritórios", "Painel com os números do mês"),
 ])}
 </div></div><button class="car-arrow r" aria-label="Avançar"><span>{ico("right")}</span></button></div>
@@ -555,9 +559,9 @@ def contato():
 if __name__ == "__main__":
     for name, fn in [("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
                      ("avulsos.html", avulsos), ("exemplos.html", exemplos), ("contato.html", contato)]:
-        (ROOT / name).write_text(fn(), encoding="utf-8")
+        (ROOT / name).write_text(fn().replace("__VER__", VER), encoding="utf-8")
     (ROOT / "assets/img/favicon.svg").write_text(LOGO.replace(' class="mark"', ' xmlns="http://www.w3.org/2000/svg"').replace('viewBox="80 220 1376 560"', 'viewBox="80 -188 1376 1376"'))
-    (ROOT / "404.html").write_text(head("Página não encontrada | Flateka", "Página não encontrada") + header("") +
+    (ROOT / "404.html").write_text((head("Página não encontrada | Flateka", "Página não encontrada") + header("") +
                                    page_intro("Erro 404", "Essa página não existe", "Mas o resto do site está aqui.") +
-                                   '<div class="center"><a class="btn" href="index.html">Voltar ao início</a></div>' + footer(), encoding="utf-8")
+                                   '<div class="center"><a class="btn" href="index.html">Voltar ao início</a></div>' + footer()).replace("__VER__", VER), encoding="utf-8")
     print("ok")
