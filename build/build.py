@@ -138,9 +138,7 @@ def header(active):
 <a class="logo" href="index.html" aria-label="Flateka, início">{LOGO}Flateka</a>
 <ul class="menu">{links}</ul>
 <a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Falar no WhatsApp {ico("arrow")}</a>
-<button class="burger" aria-label="Abrir menu" aria-expanded="false"><span></span></button>
 </nav></div></header>
-<div class="drawer">{dlinks}<small>(21) 97177-5223 · {EMAIL}</small></div>
 <main>
 '''
 
@@ -157,21 +155,15 @@ def cta(title="Vamos olhar o seu negócio juntos?", text="Uma conversa de 20 min
 
 
 def footer():
-    links = "".join(f'<li><a href="{f}">{n}</a></li>' for f, n in PAGES)
+    links = "".join(f'<a href="{f}">{n}</a>' for f, n in PAGES)
     svc = "".join(f'<li><a href="servicos.html#{k}">{s["title"]}</a></li>' for k, s in list(SERVICES.items())[:5])
     return f'''</main>
-<footer class="footer"><div class="wrap">
-<div class="foot">
-<div><a class="logo" href="index.html">{LOGO}Flateka</a><p>Consultoria digital para pequenas e médias empresas de Nova Iguaçu e região.</p>
-<div class="contact-list" style="max-width:360px">
-<a class="c-item" href="{WA_MSG}" target="_blank" rel="noopener"><span class="ic">{ico("wa")}</span><span><small>WhatsApp</small><b>(21) 97177-5223</b></span></a>
-<div class="c-item"><span class="ic">{ico("mail")}</span><span><small>E-mail</small><b>{EMAIL}</b></span><button class="copy" data-copy="{EMAIL}" data-msg="E-mail copiado" data-tip="Copiar e-mail" aria-label="Copiar e-mail">{ico("copy")}</button></div>
-</div></div>
-<div><h4>Páginas</h4><ul>{links}</ul></div>
-<div><h4>Serviços</h4><ul>{svc}</ul></div>
+<footer class="footer"><div class="wrap"><div class="foot">
+<a class="logo" href="index.html">{LOGO}Flateka</a>
+<nav class="foot-links" aria-label="Rodapé">{links}</nav>
+<div class="foot-contact"><a class="ic-btn" href="{WA_MSG}" target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp">{ico("wa")}</a><button class="ic-btn" data-copy="{EMAIL}" data-msg="E-mail copiado" data-tip="Copiar e-mail" aria-label="Copiar e-mail">{ico("mail")}</button></div>
 </div>
-<div class="big-word" aria-hidden="true">Flateka</div>
-<div class="copyright"><span>© <span id="year">2026</span> Flateka. Nova Iguaçu, RJ.</span><button data-copy="https://flateka-b2653.web.app" data-msg="Link copiado" class="muted" style="text-decoration:underline;text-underline-offset:3px">Copiar link do site</button></div>
+<div class="copyright"><span>© <span id="year">2026</span> Flateka</span><button data-copy="https://flateka-b2653.web.app" data-msg="Link copiado">Copiar link do site</button></div>
 </div></footer>
 <button class="totop" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/></svg>{ico("arrow")}</button>
 <div class="mbar"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">{ico("wa")} Agendar conversa pelo WhatsApp</a></div>
@@ -246,7 +238,7 @@ def laptop_site():
     gal = "".join(f'<div><img src="{u(P[k], 400)}" alt="" loading="lazy"></div>' for k in ("salao3", "salao2", "salao"))
     return f'''<div class="laptop" data-tilt="4"><div class="lid"><div class="scr"><div class="demo-site"><div class="demo-scroll">
 <div class="ds-nav">Bela Forma<span>Serviços · Equipe · Contato</span><em>Agendar</em></div>
-<div class="ds-hero"><img src="{u(P["salao3"], 900)}" alt="" loading="lazy"><div><b>Seu cabelo do jeito<br>que você sonhou</b>Centro de Nova Iguaçu · ter a sáb<br><i>Agendar pelo WhatsApp</i></div></div>
+<div class="ds-hero"><img src="{u(P["salao3"], 900)}" alt="" loading="lazy"><div><b>Seu cabelo do jeito<br>que você sonhou</b>Terça a sábado<br><i>Agendar pelo WhatsApp</i></div></div>
 <div class="ds-row"><div><b>Escova</b><small>R$ 45</small></div><div><b>Corte</b><small>R$ 60</small></div><div><b>Coloração</b><small>R$ 120</small></div></div>
 <div class="ds-book"><b>Escolha o dia</b><div class="ds-days"><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span class="on">Sáb</span><span>Dom</span></div></div>
 <div class="ds-gal">{gal}</div>
@@ -281,7 +273,7 @@ def gprofile(good):
     if good:
         img = f'<div class="gp-photos">' + "".join(f'<img src="{u(P[k], 400)}" alt="" loading="lazy">' for k in ("salao3", "salao", "salao2")) + "</div>"
         return f'''<div class="gp">{img}<b>Studio Bela Forma</b><div class="gp-r"><span>4,9</span><span class="stars">★★★★★</span><small>(128)</small></div>
-<small class="muted">Salão de beleza · Centro, Nova Iguaçu</small><div class="gp-ok">Aberto agora · fecha às 19h</div>
+<small class="muted">Salão de beleza · Centro</small><div class="gp-ok">Aberto agora · fecha às 19h</div>
 <div class="gp-btns"><span>Ligar</span><span>Rotas</span><span>Agendar</span><span>Site</span></div>
 <div class="gp-rev"><b>Mariana S.</b> ★★★★★<br>Atendimento ótimo e consegui marcar pelo WhatsApp na hora.<em>Resposta do proprietário</em></div></div>'''
     return '''<div class="gp"><div class="gp-photos empty"><span></span><span></span><span></span></div><b>Studio Bela Forma</b><div class="gp-r"><span>3,6</span><span class="stars" style="opacity:.5">★★★★☆</span><small>(7)</small></div>
@@ -296,17 +288,17 @@ def bullets(items):
 
 # ---------- páginas ----------
 def index():
-    s = head("Flateka | Consultoria digital para pequenas empresas", "Atendimento automático, agendamento online, placas de avaliação, painéis em Power BI e sites para pequenas empresas de Nova Iguaçu e região.")
+    s = head("Flateka | Consultoria digital para empresas", "Atendimento automático, agendamento online, placas de avaliação, painéis em Power BI e sites para empresas.")
     s += header("index.html")
     s += f'''<section class="hero"><div class="wrap"><div class="hero-grid">
 <div>
-<span class="badge-live rv"><i></i> Atendendo Nova Iguaçu e Baixada</span>
+<span class="badge-live rv"><i></i> Atendimento 100% online</span>
 <h1 class="split">Sua empresa <span class="hl">atendendo</span> e vendendo mesmo quando você está ocupado</h1>
-<p class="lead rv">Organizamos o digital de pequenas e médias empresas: WhatsApp que responde sozinho, agenda online, avaliações no Google e números claros para decidir.</p>
+<p class="lead rv">Organizamos o digital da sua empresa: WhatsApp que responde sozinho, agenda online, avaliações no Google e números claros para decidir.</p>
 <div class="btns rv"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Agendar conversa gratuita {ico("arrow")}</a><a class="btn ghost" href="#teste">Descobrir o que eu preciso</a></div>
 </div>
 <div class="hero-visual rv">
-<div class="photo p1"><img src="{u(P["loja"], 1100)}" alt="Atendente sorrindo no balcão de uma pequena loja" fetchpriority="high"></div>
+<div class="photo p1"><img src="{u(P["loja"], 1100)}" alt="Atendente sorrindo no balcão de uma loja" fetchpriority="high"></div>
 <div class="photo p2" data-speed=".4"><img src="{u(P["qr"], 700)}" alt="Celular lendo um QR code" loading="lazy"></div>
 <div class="float-card fc1" data-speed=".6"><span class="ic">{ico("star")}</span><span><span class="stars">★★★★★</span><b>Nova avaliação</b>pela placa no balcão</span></div>
 <div class="float-card fc2" data-speed=".25"><span class="ic">{ico("chat")}</span><span><b>Respondido</b>agora no WhatsApp</span></div>
@@ -369,10 +361,10 @@ def index():
 <div class="calc-out"><small>Você pode estar deixando de vender por mês</small><b id="calc-total">R$ 0</b>
 <p class="note">{ico("doc")} Estimativa do que o seu negócio perde hoje. Não é o preço dos nossos serviços.</p></div>
 </div>
-<div><span class="eyebrow">Calculadora</span><h2 class="split">Quanto custa demorar para responder?</h2><p class="lead rv">Mexa nos controles com os números da sua empresa. A conta considera que 3 em cada 10 conversas viram venda. <span class="info" tabindex="0" data-tip="Média de conversão de conversas no WhatsApp em pequenos comércios. Ajuste mentalmente para o seu caso.">?</span></p></div>
+<div><span class="eyebrow">Calculadora</span><h2 class="split">Quanto custa demorar para responder?</h2><p class="lead rv">Mexa nos controles com os números da sua empresa. A conta considera que 3 em cada 10 conversas viram venda. <span class="info" tabindex="0" data-tip="Referência usada na conta. Ajuste mentalmente para a realidade do seu negócio.">?</span></p></div>
 </div></div></section>
 
-<section class="section statement"><div class="wrap"><p class="scrub">Pequenas empresas não perdem clientes por falta de qualidade. Perdem porque demoram para responder, não aparecem no Google e decidem sem olhar os números. É isso que a Flateka resolve.</p></div></section>
+<section class="section statement"><div class="wrap"><p class="scrub">Muitas empresas não perdem clientes por falta de qualidade. Perdem porque demoram para responder, não aparecem no Google e decidem sem olhar os números. É isso que a Flateka resolve.</p></div></section>
 
 <section class="hpin"><div class="hpin-inner">
 <div class="hpin-head wrap"><span class="eyebrow">Como trabalhamos</span><h2>Do primeiro papo ao resultado</h2><p class="muted">Role para ver cada etapa</p></div>
@@ -395,9 +387,9 @@ def index():
 
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">Para quem é</span><h2 class="split">Feito para o comércio da região</h2></div>
-<p class="muted rv" style="max-width:340px">Passe o cursor nas setas para navegar.</p></div></div>
+<p class="muted rv" style="max-width:340px">Arraste para o lado ou use as setas.</p></div></div>
 <div class="carousel rv"><button class="car-arrow l" aria-label="Voltar"><span>{ico("left")}</span></button><div class="car-view"><div class="car-track">
-{"".join(f'<div class="car-item"><div class="im skel"><img src="{u(P[k], 700)}" alt="" loading="lazy"></div><div class="tx"><small>{a}</small><b>{b}</b></div></div>' for k, a, b in [
+{"".join(f'<div class="car-item"><div class="im skel"><img src="{u(P[k], 700)}" alt="" draggable="false"></div><div class="tx"><small>{a}</small><b>{b}</b></div></div>' for k, a, b in [
     ("salao", "Salões", "Agenda cheia sem ficar no celular"),
     ("cafe", "Cafeterias", "Avaliações que trazem gente nova"),
     ("moda", "Lojas de roupa", "Catálogo e pedidos pelo WhatsApp"),
@@ -457,11 +449,11 @@ def planos():
         ("Por que o preço tem uma faixa?", "Depende do tamanho do negócio e de quantos canais vamos montar. Você recebe o valor fechado depois da primeira conversa."),
         ("O atendimento automático parece robô?", "Não. As respostas são escritas com o jeito da sua empresa, e quando a pergunta foge do comum a conversa passa para você."),
         ("Em quanto tempo fica pronto?", "Raio-X em até 5 dias úteis. Atendimento e sites em 7 a 15 dias, dependendo do que for incluído."),
-        ("Atendem fora de Nova Iguaçu?", "Sim. A maior parte do trabalho é online, então atendemos toda a Baixada, o Rio e outras cidades."),
+        ("Vocês atendem a distância?", "Sim. Todo o trabalho é feito online, então atendemos empresas de qualquer cidade."),
     ]
-    s = head("Planos | Flateka", "Planos Raio-X, Presença, Atendimento e Gestão completa para pequenas empresas.")
+    s = head("Planos | Flateka", "Planos Raio-X, Presença, Atendimento e Gestão completa para empresas.")
     s += header("planos.html")
-    s += page_intro("Planos", 'Escolha o <span class="hl">tamanho certo</span> para agora', "Comece pequeno e cresça quando fizer sentido. Sem fidelidade nos planos mensais.")
+    s += page_intro("Planos", 'Escolha o <span class="hl">tamanho certo</span> para agora', "Comece pelo essencial e cresça quando fizer sentido. Sem fidelidade nos planos mensais.")
     s += f'''<section class="section" style="padding-top:20px"><div class="wrap"><div class="plans" data-stagger>{cards}</div>
 <p class="center note" style="justify-content:center;margin-top:30px">{ico("lock")} Valor fechado só depois da conversa. Nada de surpresa na fatura.</p></div></section>
 <section class="section"><div class="wrap"><div class="center" style="margin-bottom:40px"><span class="eyebrow">Dúvidas</span><h2 class="split">Perguntas frequentes</h2></div>
@@ -550,9 +542,9 @@ def contato():
 </form>
 <div class="rv"><div class="photo" style="position:relative;aspect-ratio:4/3"><img src="{u(P["cafe"], 1000)}" alt="Dona de cafeteria sorrindo no balcão" loading="lazy"></div>
 <div class="contact-list">
-<a class="c-item" href="{WA_MSG}" target="_blank" rel="noopener"><span class="ic">{ico("wa")}</span><span><small>WhatsApp</small><b>(21) 97177-5223</b></span></a>
+<a class="c-item" href="{WA_MSG}" target="_blank" rel="noopener"><span class="ic">{ico("wa")}</span><span><small>WhatsApp</small><b>Chamar no WhatsApp</b></span></a>
 <div class="c-item"><span class="ic">{ico("mail")}</span><span><small>E-mail</small><b>{EMAIL}</b></span><button class="copy" data-copy="{EMAIL}" data-msg="E-mail copiado" data-tip="Copiar e-mail" aria-label="Copiar e-mail">{ico("copy")}</button></div>
-<div class="c-item"><span class="ic">{ico("pin")}</span><span><small>Região</small><b>Nova Iguaçu e Baixada Fluminense</b></span></div>
+<div class="c-item"><span class="ic">{ico("clock")}</span><span><small>Atendimento</small><b>Online, para qualquer cidade</b></span></div>
 </div></div>
 </div></div></section>
 '''

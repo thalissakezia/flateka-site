@@ -304,6 +304,13 @@ void main(){
       t += me ? 900 : 1100;
     });
   }
+  function phones() {
+    $$(".phone-scene").forEach((sc) => {
+      if (sc.closest(".mock-pane")) return;
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { playChat(sc); io.disconnect(); } }), { threshold: .3 });
+      io.observe(sc);
+    });
+  }
   function bars(scope) {
     $$(".dash-chart i", scope).forEach((b, i) => { b.style.height = "0"; setTimeout(() => (b.style.height = b.dataset.h + "%"), 80 + i * 60); });
   }
@@ -349,26 +356,30 @@ void main(){
     ins.forEach((i) => i.addEventListener("input", upd)); upd();
   }
 
-  /* ---------- carrossel infinito com setas ---------- */
+  /* ---------- carrossel infinito: setas, arrastar e rolagem ---------- */
   function carousel() {
     $$(".carousel").forEach((car) => {
-      const track = $(".car-track", car);
+      const view = $(".car-view", car), track = $(".car-track", car);
       track.innerHTML += track.innerHTML;
-      let x = 0, v = -0.35, target = -0.35;
+      const BASE = -0.9;
+      let x = 0, v = BASE, target = BASE, drag = false, lx = 0, boost = 0, lastY = scrollY;
       $$(".car-arrow", car).forEach((a) => {
         const dir = a.classList.contains("l") ? 1 : -1;
-        const on = () => (target = dir * 6), off = () => (target = -0.35);
+        const on = () => (target = dir * 9), off = () => (target = BASE);
         a.addEventListener("pointerenter", on); a.addEventListener("pointerleave", off);
-        a.addEventListener("pointerdown", on); a.addEventListener("pointerup", off);
-        a.addEventListener("click", () => { x += dir * 300; });
+        a.addEventListener("click", () => { x += dir * 320; });
       });
-      car.addEventListener("pointerenter", (e) => { if (!e.target.closest(".car-arrow")) target = target === -0.35 ? 0 : target; });
-      car.addEventListener("pointerleave", () => (target = -0.35));
+      view.addEventListener("pointerdown", (e) => { drag = true; lx = e.clientX; view.classList.add("drag"); view.setPointerCapture(e.pointerId); });
+      view.addEventListener("pointermove", (e) => { if (!drag) return; const d = e.clientX - lx; lx = e.clientX; x += d; v = d; });
+      const up = () => { if (!drag) return; drag = false; view.classList.remove("drag"); target = BASE; };
+      view.addEventListener("pointerup", up); view.addEventListener("pointercancel", up);
+      addEventListener("scroll", () => { boost += (scrollY - lastY) * -0.35; lastY = scrollY; }, { passive: true });
       const half = () => track.scrollWidth / 2;
       (function f() {
-        if (!calm) { v += (target - v) * .08; x += v; }
+        if (!drag && !calm) { v += (target - v) * .06; x += v + boost; }
+        boost *= .88;
         const w = half();
-        if (x <= -w) x += w; if (x > 0) x -= w;
+        if (w) { while (x <= -w) x += w; while (x > 0) x -= w; }
         track.style.transform = `translate3d(${x}px,0,0)`;
         requestAnimationFrame(f);
       })();
@@ -537,9 +548,9 @@ void main(){
 
   document.addEventListener("DOMContentLoaded", () => {
     document.body.append(toastEl, modal);
-    background(); header(); motion(); pointerFx(); copyBtns(); tips(); services(); skeletons();
-    mockTabs(); quiz(); calc(); carousel(); plates(); contact();
-    progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
+    carousel(); background(); header(); motion(); pointerFx(); copyBtns(); tips(); services(); skeletons();
+    mockTabs(); quiz(); calc(); plates(); contact();
+    phones(); progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
     const y = $("#year"); if (y) y.textContent = new Date().getFullYear();
   });
 })();
