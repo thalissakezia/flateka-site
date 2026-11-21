@@ -58,7 +58,7 @@ WA = "https://wa.me/5521971775223"
 WA_MSG = WA + "?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flateka%20e%20quero%20conversar."
 EMAIL = "flateka.com@gmail.com"
 
-LOGO = '''<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="10" fill="#1F4A3F"/><path d="M11 8.5h11M11 8.5v15M11 15.5h8" stroke="#FBF9F5" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="23" cy="22" r="2.6" fill="#C9A66B"/></svg>'''
+LOGO = '''<svg class="mark" viewBox="80 220 1376 560" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="82" aria-hidden="true"><g stroke="#06244A"><path d="M358 458L540 284l205 122-18 60 41 96"/><path d="M1178 458L996 284 791 406l18 60-41 96"/><path d="M400 572l188 122"/><path d="M1136 572L948 694"/></g><g stroke="#00857A"><path d="M372 282L158 497l214 215"/><path d="M1164 282l214 215-214 215"/><path d="M618 432l-68 80 140 92"/><path d="M918 432l68 80-140 92"/></g></svg>'''
 
 PAGES = [
     ("index.html", "Início"),
@@ -261,12 +261,12 @@ def dash_mock():
 </div>'''
 
 
-def plate_mock(color="branco"):
+def plate_mock(color="azul"):
+    nfc = '<svg viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16a12 12 0 0 1 0 16M14 12a18 18 0 0 1 0 24M20 8a24 24 0 0 1 0 32"/><rect x="34" y="6" width="18" height="30" rx="3" transform="rotate(12 43 21)"/><path d="M30 44c-2-5 0-10 4-13l6-4M44 46l6-9"/></svg>'
     return f'''<div class="plate-scene"><div class="plate" data-c="{color}" data-tilt="10">
-<div style="width:46px;height:46px">{LOGO}</div>
-<span class="g">Avalie a gente no Google</span><span class="stars">★★★★★</span>
-<div class="qr">{qr_svg()}</div>
-<span class="nfc">{ico("placa")} Aproxime o celular</span>
+<div class="pl-top"><span class="stars">★★★★★</span><small class="pl-sub">SUA OPINIÃO É MUITO IMPORTANTE!</small><b class="g">AVALIE NO GOOGLE</b></div>
+<div class="pl-wave"><span class="pl-badge">{ico("star")}</span></div>
+<div class="pl-bot"><div class="pl-nfc">{nfc}<span>APROXIME O CELULAR</span></div><div class="qr">{qr_svg()}</div></div>
 </div></div>'''
 
 
@@ -434,8 +434,8 @@ def planos():
 
 
 def avulsos():
-    colors = [("branco", "#f7f5f0"), ("preto", "#1a1d1f"), ("azul", "#2c5aa0"), ("verde", "#2f6b57"), ("vermelho", "#b3393b"), ("rosa", "#eeb3c4"), ("dourado", "#d4b26a")]
-    sw = "".join(f'<button class="sw" style="background:{c}" data-set="cor:{n}" aria-pressed="{str(n == "branco").lower()}" aria-label="{n}" data-tip="{n.capitalize()}"></button>' for n, c in colors)
+    colors = [("azul", "#1f56c4"), ("preto", "#1a1d1f"), ("branco", "#f7f5f0"), ("verde", "#2f6b57"), ("vermelho", "#b3393b"), ("rosa", "#eeb3c4"), ("dourado", "#d4b26a")]
+    sw = "".join(f'<button class="sw" style="background:{c}" data-set="cor:{n}" aria-pressed="{str(n == "azul").lower()}" aria-label="{n}" data-tip="{n.capitalize()}"></button>' for n, c in colors)
     qty = "".join(f'<button data-set="qtd:{q}" aria-pressed="{str(q == 1).lower()}">{q} un<small>R$ {p}</small></button>' for q, p in [(1, 60), (3, 150), (5, 225), (10, 400)])
     extras = [
         ("bars", "Painel em Power BI", "a partir de R$ 500", "Um painel com os números que importam, ligado às suas planilhas."),
@@ -451,7 +451,7 @@ def avulsos():
 <div class="panel">
 <span class="cfg-label" style="margin-top:0">Modelo</span>
 <div class="seg"><button data-set="modelo:Google" aria-pressed="true">Avaliação Google</button><button data-set="modelo:Instagram" aria-pressed="false">Instagram</button></div>
-<span class="cfg-label">Cor: <span id="cfg-cor" style="color:var(--ink);text-transform:capitalize">branco</span></span>
+<span class="cfg-label">Cor: <span id="cfg-cor" style="color:var(--ink);text-transform:capitalize">azul</span></span>
 <div class="swatches">{sw}</div>
 <span class="cfg-label">Quantidade</span>
 <div class="qty">{qty}</div>
@@ -525,7 +525,7 @@ if __name__ == "__main__":
     for name, fn in [("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
                      ("avulsos.html", avulsos), ("exemplos.html", exemplos), ("contato.html", contato)]:
         (ROOT / name).write_text(fn(), encoding="utf-8")
-    (ROOT / "assets/img/favicon.svg").write_text(LOGO.replace(' aria-hidden="true"', ' xmlns="http://www.w3.org/2000/svg"'))
+    (ROOT / "assets/img/favicon.svg").write_text(LOGO.replace(' class="mark"', ' xmlns="http://www.w3.org/2000/svg"').replace('viewBox="80 220 1376 560"', 'viewBox="80 -188 1376 1376"'))
     (ROOT / "404.html").write_text(head("Página não encontrada | Flateka", "Página não encontrada") + header("") +
                                    page_intro("Erro 404", "Essa página não existe", "Mas o resto do site está aqui.") +
                                    '<div class="center"><a class="btn" href="index.html">Voltar ao início</a></div>' + footer(), encoding="utf-8")

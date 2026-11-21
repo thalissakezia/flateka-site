@@ -26,7 +26,7 @@ void main(){
  vec2 q=vec2(fbm(p+tt),fbm(p+vec2(5.2,1.3)-tt));
  vec2 w=vec2(fbm(p+3.*q+vec2(1.7,9.2)+tt*.6+m*.25),fbm(p+3.*q+vec2(8.3,2.8)-tt*.4));
  float f=fbm(p+2.5*w+s*.15);
- vec3 cream=vec3(.957,.941,.91);vec3 mint=vec3(.80,.87,.83);vec3 green=vec3(.55,.68,.62);vec3 brass=vec3(.88,.80,.64);
+ vec3 cream=vec3(.957,.941,.91);vec3 mint=vec3(.80,.90,.88);vec3 green=vec3(.42,.62,.66);vec3 brass=vec3(.88,.80,.64);
  vec3 col=mix(cream,mint,smoothstep(.35,.85,f));
  col=mix(col,green,smoothstep(.62,1.,length(w))*.35);
  col=mix(col,brass,smoothstep(.55,.95,q.x)*.28);
@@ -376,14 +376,19 @@ void main(){
   }
 
   /* ---------- configurador de placas ---------- */
+  const STAR = '<svg class="ico" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+  const CAM = '<svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>';
   function plates() {
     const cf = $("#config"); if (!cf) return;
     const plate = $(".plate", cf);
     const price = { 1: 60, 3: 150, 5: 225, 10: 400 };
-    const st = { modelo: "Google", cor: "branco", qtd: 1 };
+    const st = { modelo: "Google", cor: "azul", qtd: 1 };
     const upd = () => {
       plate.dataset.c = st.cor;
-      $(".g", plate).textContent = st.modelo === "Google" ? "Avalie a gente no Google" : "Siga a gente no Instagram";
+      const g = st.modelo === "Google";
+      $(".g", plate).textContent = g ? "AVALIE NO GOOGLE" : "SIGA NO INSTAGRAM";
+      $(".pl-sub", plate).textContent = g ? "SUA OPINIÃO É MUITO IMPORTANTE!" : "FIQUE POR DENTRO DAS NOVIDADES!";
+      $(".pl-badge", plate).innerHTML = g ? STAR : CAM;
       $(".stars", plate).style.display = st.modelo === "Google" ? "" : "none";
       $("#cfg-total").textContent = brl(price[st.qtd]);
       $("#cfg-each").textContent = brl(price[st.qtd] / st.qtd) + " cada";
