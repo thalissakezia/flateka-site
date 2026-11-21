@@ -58,7 +58,7 @@ WA = "https://wa.me/5521971775223"
 WA_MSG = WA + "?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flateka%20e%20quero%20conversar."
 EMAIL = "flateka.com@gmail.com"
 
-LOGO = '''<svg class="mark" viewBox="80 220 1376 560" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="82" aria-hidden="true"><g stroke="#06244A"><path d="M358 458L540 284l205 122-18 60 41 96"/><path d="M1178 458L996 284 791 406l18 60-41 96"/><path d="M400 572l188 122"/><path d="M1136 572L948 694"/></g><g stroke="#00857A"><path d="M372 282L158 497l214 215"/><path d="M1164 282l214 215-214 215"/><path d="M618 432l-68 80 140 92"/><path d="M918 432l68 80-140 92"/></g></svg>'''
+LOGO = '''<svg class="mark" viewBox="80 220 1376 560" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="82" aria-hidden="true"><g stroke="#102B4E"><path d="M358 458L540 284l205 122-18 60 41 96"/><path d="M1178 458L996 284 791 406l18 60-41 96"/><path d="M400 572l188 122"/><path d="M1136 572L948 694"/></g><g stroke="#078F86"><path d="M372 282L158 497l214 215"/><path d="M1164 282l214 215-214 215"/><path d="M618 432l-68 80 140 92"/><path d="M918 432l68 80-140 92"/></g></svg>'''
 
 PAGES = [
     ("index.html", "Início"),
@@ -139,9 +139,9 @@ def header(active):
         f'<li><a href="{f}"{" aria-current=page" if f == active else ""}>{n}</a></li>' for f, n in PAGES)
     dlinks = "".join(f'<a href="{f}">{n}</a>' for f, n in PAGES)
     return f'''<header class="header"><div class="wrap"><nav class="nav" aria-label="Principal">
-<a class="logo" href="index.html" aria-label="Flateka, início">{LOGO}Flateka</a>
+<a class="logo" href="index.html" aria-label="Flateka, início">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a>
 <ul class="menu">{links}</ul>
-<a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Falar no WhatsApp {ico("arrow")}</a>
+<a class="btn small" href="{WA_MSG}" target="_blank" rel="noopener">Fale conosco</a>
 </nav></div></header>
 <main>
 '''
@@ -163,7 +163,7 @@ def footer():
     svc = "".join(f'<li><a href="servicos.html#{k}">{s["title"]}</a></li>' for k, s in list(SERVICES.items())[:5])
     return f'''</main>
 <footer class="footer"><div class="wrap"><div class="foot">
-<a class="logo" href="index.html">{LOGO}Flateka</a>
+<a class="logo" href="index.html">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a>
 <nav class="foot-links" aria-label="Rodapé">{links}</nav>
 <div class="foot-contact"><a class="ic-btn" href="{WA_MSG}" target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp">{ico("wa")}</a><button class="ic-btn" data-copy="{EMAIL}" data-msg="E-mail copiado" data-tip="Copiar e-mail" aria-label="Copiar e-mail">{ico("mail")}</button></div>
 </div>
@@ -319,9 +319,9 @@ def index():
 <div class="marquee" aria-hidden="true"><div class="marquee-track">{"".join(f"<span>{x}</span>" for x in ["Salões", "Clínicas", "Restaurantes", "Lojas", "Escritórios", "Consultórios", "Academias", "Pet shops", "Oficinas"] * 2)}</div></div>
 
 <section class="section"><div class="wrap">
-<div class="sec-head"><div><span class="eyebrow">O que fazemos</span><h2 class="split">Tudo que o seu cliente vê antes de comprar</h2><p class="lead rv">Clique num serviço para ver o que está incluso.</p></div>
+<div class="sec-head"><div><span class="eyebrow">O que fazemos</span><h2 class="split">Tudo que o seu cliente vê antes de comprar</h2><p class="lead rv">Os mais procurados. Veja todos na página de serviços.</p></div>
 <a class="btn ghost rv" href="servicos.html">Todos os serviços {ico("arrow")}</a></div>
-<div class="services" data-stagger>{svc_card("atendimento", True)}{svc_card("placas", True)}{svc_card("raiox")}{svc_card("dashboard")}{svc_card("site")}</div>
+<div class="services" data-stagger>{svc_card("atendimento")}{svc_card("placas")}{svc_card("dashboard")}</div>
 </div></section>
 
 <section class="section mock-sec"><div class="wrap">
@@ -368,27 +368,6 @@ def index():
 <div><span class="eyebrow">Calculadora</span><h2 class="split">Quanto custa demorar para responder?</h2><p class="lead rv">Mexa nos controles com os números da sua empresa. A conta considera que 3 em cada 10 conversas viram venda. <span class="info" tabindex="0" data-tip="Referência usada na conta. Ajuste mentalmente para a realidade do seu negócio.">?</span></p></div>
 </div></div></section>
 
-<section class="section statement"><div class="wrap"><p class="scrub">Muitas empresas não perdem clientes por falta de qualidade. Perdem porque demoram para responder, não aparecem no Google e decidem sem olhar os números. É isso que a Flateka resolve.</p></div></section>
-
-<section class="hpin"><div class="hpin-inner">
-<div class="hpin-head wrap"><span class="eyebrow">Como trabalhamos</span><h2>Do primeiro papo ao resultado</h2><p class="muted">Role para ver cada etapa</p></div>
-<div class="hpin-track">
-<div class="hcard"><span class="num">01</span><span class="ic">{ico("chat")}</span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje. Leva 20 minutos e é gratuita.</p></div>
-<div class="hcard"><span class="num">02</span><span class="ic">{ico("raiox")}</span><h3>Diagnóstico</h3><p>Olhamos Google, Instagram, WhatsApp e site e mostramos onde está a maior perda.</p></div>
-<div class="hcard"><span class="num">03</span><span class="ic">{ico("tool")}</span><h3>Implantação</h3><p>Montamos tudo, testamos com você e treinamos sua equipe para usar no dia a dia.</p></div>
-<div class="hcard"><span class="num">04</span><span class="ic">{ico("trend")}</span><h3>Acompanhamento</h3><p>Relatório todo mês e ajustes para melhorar sempre. Você fala direto com quem fez.</p></div>
-<div class="hcard dark"><span class="ic">{ico("wa")}</span><h3>Vamos começar?</h3><p>Chame no WhatsApp e marque a primeira conversa.</p><a class="btn light" href="{WA_MSG}" target="_blank" rel="noopener">Agendar agora</a></div>
-</div></div></section>
-
-<section class="section"><div class="wrap"><div class="two">
-<div><span class="eyebrow">Antes e depois</span><h2 class="split">Arraste e veja a diferença</h2><p class="lead rv">Um perfil no Google sem cuidado perde cliente para o concorrente da esquina. Arraste a barra para comparar.</p><p class="note">{ico("doc")} Exemplo ilustrativo com empresa fictícia.</p></div>
-<div class="compare rv" id="compare" style="--pos:50%">
-<div class="cmp-side before">{gprofile(False)}</div>
-<div class="cmp-side after">{gprofile(True)}</div>
-<div class="cmp-handle" role="slider" tabindex="0" aria-label="Comparar antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span>{ico("left")}{ico("right")}</span></div>
-<span class="cmp-tag l">Antes</span><span class="cmp-tag r">Depois</span>
-</div></div></div></section>
-
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">Para quem é</span><h2 class="split">Feito para todo tipo de negócio</h2></div>
 <p class="muted rv" style="max-width:340px">Arraste para o lado ou use as setas.</p></div></div>
@@ -410,24 +389,51 @@ def index():
     return s
 
 
+WHO = {
+    "raiox": "Para quem quer saber onde está e por onde começar.",
+    "atendimento": "Para quem perde clientes por demorar a responder.",
+    "agenda": "Para salões, clínicas e quem trabalha com horário marcado.",
+    "placas": "Para lojas, salões e clínicas com atendimento no balcão.",
+    "dashboard": "Para quem decide no achismo e quer ver os números.",
+    "site": "Para quem precisa de um endereço próprio na internet.",
+    "maps": "Para quem quer ser encontrado por quem está procurando.",
+}
+
+
+def svc_row(k):
+    sv = SERVICES[k]
+    items = "".join(f"<li>{ico('check')}<span>{i}</span></li>" for i in sv["items"])
+    return f'''<article class="srow" id="{k}" data-spot>
+<div class="srow-img skel"><img src="{u(P_of(k), 800)}" alt="" loading="lazy"></div>
+<div class="srow-main"><span class="ic">{ico(sv["icon"])}</span><h3>{sv["title"]}</h3><p class="muted">{WHO[k]}</p><b class="srow-price">{sv["price"]}</b></div>
+<div class="srow-det"><p>{sv["text"]}</p><ul>{items}</ul><a class="btn small" href="{WA}?text={sv["title"].replace(" ", "%20")}%20-%20quero%20saber%20mais" target="_blank" rel="noopener">Quero esse serviço {ico("arrow")}</a></div>
+</article>'''
+
+
 def servicos():
     s = head("Serviços | Flateka", "Raio-X digital, atendimento automático, agendamento online, placas NFC e QR, painéis em Power BI, sites e Google Maps.")
     s += header("servicos.html")
-    s += page_intro("Serviços", 'Cada serviço resolve <span class="hl">um problema real</span>', "Você pode contratar um só ou combinar num plano. Clique em qualquer card para ver os detalhes.")
-    s += f'''<section class="section" style="padding-top:20px"><div class="wrap">
-<div class="services" data-stagger>{svc_card("raiox", True)}{svc_card("atendimento", True)}{svc_card("agenda")}{svc_card("placas")}{svc_card("dashboard")}{svc_card("site", True)}{svc_card("maps", True)}</div>
-</div></section>
-<section class="section"><div class="wrap"><div class="center" style="margin-bottom:50px"><span class="eyebrow">Por que a Flateka</span><h2 class="split">O que você ganha</h2></div>
-<div class="stack">
-<div class="scard" style="--i:0"><span class="ic">{ico("clock")}</span><div><h3>Tempo de volta</h3><p>Pare de responder a mesma pergunta 30 vezes por dia. O atendimento automático cuida disso.</p></div><img src="{u(P["balcao"], 700)}" alt="" loading="lazy"></div>
-<div class="scard" style="--i:1"><span class="ic">{ico("star")}</span><div><h3>Mais avaliações</h3><p>Com a placa no balcão, o cliente avalia na hora em que está satisfeito.</p></div><img src="{u(P["qr"], 700)}" alt="" loading="lazy"></div>
-<div class="scard" style="--i:2"><span class="ic">{ico("bars")}</span><div><h3>Decisão com números</h3><p>Saiba o que vende, o que dá lucro e quais clientes sumiram, num painel simples.</p></div><img src="{u(P["dash"], 700)}" alt="" loading="lazy"></div>
-<div class="scard" style="--i:3"><span class="ic">{ico("user")}</span><div><h3>Atendimento de perto</h3><p>Você fala com quem fez o trabalho, sem central de atendimento e sem robô para pedir ajuda.</p></div><img src="{u(P["cafe"], 700)}" alt="" loading="lazy"></div>
+    s += page_intro("Serviços", 'Tudo o que a sua empresa precisa para <span class="hl">atender melhor</span> e decidir com dados', "Cada serviço pode ser contratado sozinho ou dentro de um plano. Se não souber por onde começar, comece pelo Raio-X.")
+    rows = "".join(svc_row(k) for k in ["raiox", "atendimento", "agenda", "placas", "dashboard", "site", "maps"])
+    s += f'''<section class="section tight"><div class="wrap"><div class="srows">{rows}</div></div></section>
+
+<section class="section"><div class="wrap">
+<div class="sec-head"><div><span class="eyebrow">Como trabalhamos</span><h2 class="split">Do primeiro papo ao resultado</h2></div></div>
+<div class="steps" data-stagger>
+<div class="step"><span class="ic">{ico("chat")}</span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje.</p></div>
+<div class="step"><span class="ic">{ico("raiox")}</span><h3>Diagnóstico</h3><p>Olhamos seus canais e mostramos onde está a maior perda.</p></div>
+<div class="step"><span class="ic">{ico("tool")}</span><h3>Implantação</h3><p>Montamos tudo, testamos com você e treinamos sua equipe.</p></div>
+<div class="step"><span class="ic">{ico("trend")}</span><h3>Acompanhamento</h3><p>Relatório todo mês e ajustes para melhorar sempre.</p></div>
 </div></div></section>
-<section class="section mock-sec"><div class="wrap"><div class="two">
-<div class="mock-copy"><span class="eyebrow">Exemplo</span><h3>Um salão com o atendimento no automático</h3>{bullets(["O cliente pergunta e já recebe os horários livres", "Marca sozinho e ganha lembrete", "A dona só aparece quando precisa"])}</div>
-{phone_chat()}
-</div></div></section>
+
+<section class="section"><div class="wrap"><div class="two">
+<div><span class="eyebrow">Antes e depois</span><h2 class="split">Arraste e veja a diferença</h2><p class="lead rv">Um perfil no Google sem cuidado perde cliente para o concorrente. Arraste a barra para comparar.</p><p class="note">{ico("doc")} Exemplo ilustrativo com empresa fictícia.</p></div>
+<div class="compare rv" id="compare" style="--pos:50%">
+<div class="cmp-side before">{gprofile(False)}</div>
+<div class="cmp-side after">{gprofile(True)}</div>
+<div class="cmp-handle" role="slider" tabindex="0" aria-label="Comparar antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span>{ico("left")}{ico("right")}</span></div>
+<span class="cmp-tag l">Antes</span><span class="cmp-tag r">Depois</span>
+</div></div></div></section>
 '''
     s += cta()
     s += footer()
@@ -480,7 +486,7 @@ def avulsos():
     ex = "".join(f'<div class="extra" data-spot><span class="ic">{ico(i)}</span><h3>{t}</h3><p>{d}</p><span class="price-tag">{p}</span></div>' for i, t, p, d in extras)
     s = head("Produtos avulsos | Flateka", "Placas de acrílico com NFC e QR code para avaliação no Google e Instagram, painéis e sites avulsos.")
     s += header("avulsos.html")
-    s += page_intro("Avulsos", 'Monte sua <span class="hl">placa de avaliação</span>', "Escolha o modelo, a cor e a quantidade. O pedido sai pronto no WhatsApp.")
+    s += page_intro("Produtos avulsos", 'Precisa de uma coisa só? <span class="hl">Também vendemos separado</span>', "Sem plano e sem mensalidade. Escolha o produto, veja o que vem junto e peça pelo WhatsApp.")
     s += f'''<section class="section" style="padding-top:20px"><div class="wrap"><div class="config" id="config">
 {plate_mock()}
 <div class="panel">
@@ -494,6 +500,12 @@ def avulsos():
 <div class="btns" style="margin-top:22px"><a class="btn" id="cfg-wa" href="{WA}" target="_blank" rel="noopener" style="width:100%">{ico("wa")} Fazer pedido no WhatsApp</a></div>
 <p class="note">{ico("box")} Acrílico com chip NFC e QR code. O link pode ser trocado depois, sem trocar a placa.</p>
 </div></div></div></section>
+<section class="section tight"><div class="wrap"><div class="specs" data-stagger>
+<div class="spec"><span class="ic">{ico("box")}</span><h3>Tamanhos e material</h3><p>Acrílico de 3 mm com cantos arredondados. 10 x 10 cm para balcão ou 15 x 20 cm para parede.</p></div>
+<div class="spec"><span class="ic">{ico("placa")}</span><h3>O que vem junto</h3><p>QR code impresso, etiqueta NFC no verso e suporte de mesa ou fita dupla face.</p></div>
+<div class="spec"><span class="ic">{ico("spark")}</span><h3>Arte com a sua marca</h3><p>Logo, cores e texto da sua empresa, sem custo extra.</p></div>
+<div class="spec"><span class="ic">{ico("auto")}</span><h3>Destino pode mudar</h3><p>Quer trocar o link depois? Mudamos sem reimprimir a placa.</p></div>
+</div></div></section>
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">Outros avulsos</span><h2 class="split">Precisa só de uma coisa?</h2></div></div>
 <div class="extras" data-stagger>{ex}</div></div></section>
@@ -560,7 +572,7 @@ if __name__ == "__main__":
     for name, fn in [("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
                      ("avulsos.html", avulsos), ("exemplos.html", exemplos), ("contato.html", contato)]:
         (ROOT / name).write_text(fn().replace("__VER__", VER), encoding="utf-8")
-    (ROOT / "assets/img/favicon.svg").write_text(LOGO.replace(' class="mark"', ' xmlns="http://www.w3.org/2000/svg"').replace('viewBox="80 220 1376 560"', 'viewBox="80 -188 1376 1376"'))
+    (ROOT / "assets/img/favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#102B4E"/><svg x="6" y="20" width="52" height="24" ' + LOGO.split("<svg ", 1)[1].replace(' class="mark"', '').replace('#102B4E', '#FFFFFF').replace('#078F86', '#3CC4B8') + '</svg>')
     (ROOT / "404.html").write_text((head("Página não encontrada | Flateka", "Página não encontrada") + header("") +
                                    page_intro("Erro 404", "Essa página não existe", "Mas o resto do site está aqui.") +
                                    '<div class="center"><a class="btn" href="index.html">Voltar ao início</a></div>' + footer()).replace("__VER__", VER), encoding="utf-8")

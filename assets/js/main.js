@@ -26,7 +26,7 @@ void main(){
  vec2 q=vec2(fbm(p+tt),fbm(p+vec2(5.2,1.3)-tt));
  vec2 w=vec2(fbm(p+3.*q+vec2(1.7,9.2)+tt*.6+m*.25),fbm(p+3.*q+vec2(8.3,2.8)-tt*.4));
  float f=fbm(p+2.5*w+s*.15);
- vec3 cream=vec3(.957,.941,.91);vec3 mint=vec3(.80,.90,.88);vec3 green=vec3(.42,.62,.66);vec3 brass=vec3(.88,.80,.64);
+ vec3 cream=vec3(.969,.973,.965);vec3 mint=vec3(.84,.93,.91);vec3 green=vec3(.36,.66,.64);vec3 brass=vec3(.86,.89,.90);
  vec3 col=mix(cream,mint,smoothstep(.35,.85,f));
  col=mix(col,green,smoothstep(.62,1.,length(w))*.35);
  col=mix(col,brass,smoothstep(.55,.95,q.x)*.28);
@@ -108,8 +108,8 @@ void main(){
     $$(".hl").forEach((h) => gsap.fromTo(h, { "--hl": 0 }, { "--hl": 1, duration: 1.2, delay: .5, ease: "expo.out", scrollTrigger: { trigger: h, start: "top 88%" } }));
 
     // entradas
-    $$(".rv").forEach((el) => gsap.from(el, { y: 40, opacity: 0, duration: 1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } }));
-    $$("[data-stagger]").forEach((g) => gsap.from(g.children, { y: 50, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.08, scrollTrigger: { trigger: g, start: "top 85%" } }));
+    $$(".rv").forEach((el) => gsap.from(el, { y: 24, opacity: 0, duration: .8, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 96%" } }));
+    $$("[data-stagger]").forEach((g) => gsap.from(g.children, { y: 30, opacity: 0, duration: .8, ease: "expo.out", stagger: 0.06, scrollTrigger: { trigger: g, start: "top 94%" } }));
 
     // parallax de fotos
     $$(".photo img, .svc-img img, .ds-hero img").forEach((img) => gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: img.parentElement, scrub: true } }));
@@ -474,7 +474,7 @@ void main(){
       const r = b.getBoundingClientRect();
       b.style.setProperty("--bx2", e.clientX - r.left + "px"); b.style.setProperty("--by2", e.clientY - r.top + "px");
     }));
-    $$(".plan, .extra, .step").forEach((el) => el.addEventListener("pointermove", (e) => {
+    $$(".plan, .extra, .step, .srow").forEach((el) => el.addEventListener("pointermove", (e) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty("--mx", e.clientX - r.left + "px"); el.style.setProperty("--my", e.clientY - r.top + "px");
     }));
@@ -535,7 +535,7 @@ void main(){
     });
     if (!g) return;
     // fotos que abrem ao entrar na tela
-    $$(".svc-img, .photo.p1, .car-item .im, .scard img, .shot .im").forEach((el) => gsap.fromTo(el, { clipPath: "inset(14% 10% 14% 10% round 28px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.3, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
+    $$(".svc-img, .photo.p1, .car-item .im, .srow-img, .shot .im").forEach((el) => gsap.fromTo(el, { clipPath: "inset(14% 10% 14% 10% round 28px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.3, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
     // cartões empilhados diminuem quando o próximo chega
     const sc = $$(".scard");
     sc.forEach((c, i) => { if (i < sc.length - 1) gsap.to(c, { scale: .92 + i * .015, opacity: .55, ease: "none", scrollTrigger: { trigger: sc[i + 1], start: "top 85%", end: "top 30%", scrub: true } }); });
