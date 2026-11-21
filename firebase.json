@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "build/**", "README.md", ".github/**", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "headers": [
+      { "source": "**/*.@(css|js|svg|png|jpg|webp)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+    ]
+  }
+}
