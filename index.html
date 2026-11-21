@@ -17,6 +17,8 @@
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas><div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="curtain" aria-hidden="true"><span class="curtain-logo"><svg class="mark" viewBox="80 220 1376 560" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="82" aria-hidden="true"><g stroke="#06244A"><path d="M358 458L540 284l205 122-18 60 41 96"/><path d="M1178 458L996 284 791 406l18 60-41 96"/><path d="M400 572l188 122"/><path d="M1136 572L948 694"/></g><g stroke="#00857A"><path d="M372 282L158 497l214 215"/><path d="M1164 282l214 215-214 215"/><path d="M618 432l-68 80 140 92"/><path d="M918 432l68 80-140 92"/></g></svg></span></div>
 <header class="header"><div class="wrap"><nav class="nav" aria-label="Principal">
 <a class="logo" href="index.html" aria-label="Flateka, início"><svg class="mark" viewBox="80 220 1376 560" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="82" aria-hidden="true"><g stroke="#06244A"><path d="M358 458L540 284l205 122-18 60 41 96"/><path d="M1178 458L996 284 791 406l18 60-41 96"/><path d="M400 572l188 122"/><path d="M1136 572L948 694"/></g><g stroke="#00857A"><path d="M372 282L158 497l214 215"/><path d="M1164 282l214 215-214 215"/><path d="M618 432l-68 80 140 92"/><path d="M918 432l68 80-140 92"/></g></svg>Flateka</a>
 <ul class="menu"><li><a href="index.html" aria-current=page>Início</a></li><li><a href="servicos.html">Serviços</a></li><li><a href="planos.html">Planos</a></li><li><a href="avulsos.html">Avulsos</a></li><li><a href="exemplos.html">Exemplos</a></li><li><a href="contato.html">Contato</a></li></ul>
@@ -52,23 +54,23 @@
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">O que fazemos</span><h2 class="split">Tudo que o seu cliente vê antes de comprar</h2><p class="lead rv">Clique num serviço para ver o que está incluso.</p></div>
 <a class="btn ghost rv" href="servicos.html">Todos os serviços <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
-<div class="services" data-stagger><button class="svc wide" id="atendimento" data-svc="atendimento" data-spot data-tilt="3">
+<div class="services" data-stagger><button data-cursor="Abrir" class="svc wide" id="atendimento" data-svc="atendimento" data-spot data-tilt="3">
 <div class="svc-img skel"><img src="https://images.unsplash.com/photo-1687293233269-c6df38c3662f?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg></span><span class="price-tag">a partir de R$ 250/mês</span></div>
 <h3>Atendimento automático</h3><p>Respostas na hora no WhatsApp e no Instagram, até fora do horário.</p><span class="more">Ver detalhes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-</button><button class="svc wide" id="placas" data-svc="placas" data-spot data-tilt="3">
+</button><button data-cursor="Abrir" class="svc wide" id="placas" data-svc="placas" data-spot data-tilt="3">
 <div class="svc-img skel"><img src="https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span><span class="price-tag">a partir de R$ 60</span></div>
 <h3>Placas NFC e QR</h3><p>O cliente encosta o celular e já cai na sua avaliação do Google ou no Instagram.</p><span class="more">Ver detalhes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-</button><button class="svc" id="raiox" data-svc="raiox" data-spot data-tilt="3">
+</button><button data-cursor="Abrir" class="svc" id="raiox" data-svc="raiox" data-spot data-tilt="3">
 <div class="svc-img skel"><img src="https://images.unsplash.com/photo-1753351052363-53ce102830eb?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 4.9 12l4.1 4M8 11h6"/></svg></span><span class="price-tag">R$ 197 a R$ 297</span></div>
 <h3>Raio-X digital</h3><p>Um diagnóstico de como sua empresa aparece na internet, com nota e plano de ação.</p><span class="more">Ver detalhes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-</button><button class="svc" id="dashboard" data-svc="dashboard" data-spot data-tilt="3">
+</button><button data-cursor="Abrir" class="svc" id="dashboard" data-svc="dashboard" data-spot data-tilt="3">
 <div class="svc-img skel"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M2 19h20"/></svg></span><span class="price-tag">a partir de R$ 500</span></div>
 <h3>Painéis em Power BI</h3><p>Vendas, custos e clientes num painel simples, atualizado sozinho.</p><span class="more">Ver detalhes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-</button><button class="svc" id="site" data-svc="site" data-spot data-tilt="3">
+</button><button data-cursor="Abrir" class="svc" id="site" data-svc="site" data-spot data-tilt="3">
 <div class="svc-img skel"><img src="https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 9h18M7 7h.01"/></svg></span><span class="price-tag">a partir de R$ 800</span></div>
 <h3>Sites simples</h3><p>Uma página bonita e rápida, com botão de WhatsApp e mapa.</p><span class="more">Ver detalhes <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
@@ -153,14 +155,32 @@
 <div><span class="eyebrow">Calculadora</span><h2 class="split">Quanto custa demorar para responder?</h2><p class="lead rv">Mexa nos controles com os números da sua empresa. A conta considera que 3 em cada 10 conversas viram venda. <span class="info" tabindex="0" data-tip="Média de conversão de conversas no WhatsApp em pequenos comércios. Ajuste mentalmente para o seu caso.">?</span></p></div>
 </div></div></section>
 
-<section class="section"><div class="wrap">
-<div class="center"><span class="eyebrow">Como trabalhamos</span><h2 class="split">Do primeiro papo ao resultado</h2></div>
-<div class="steps" data-stagger style="margin-top:50px">
-<div class="step"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg></span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje.</p></div>
-<div class="step"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 4.9 12l4.1 4M8 11h6"/></svg></span><h3>Diagnóstico</h3><p>Olhamos seus canais e mostramos onde está a maior perda.</p></div>
-<div class="step"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span><h3>Implantação</h3><p>Montamos tudo e treinamos você e sua equipe.</p></div>
-<div class="step"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><h3>Acompanhamento</h3><p>Relatório todo mês e ajustes para melhorar sempre.</p></div>
+<section class="section statement"><div class="wrap"><p class="scrub">Pequenas empresas não perdem clientes por falta de qualidade. Perdem porque demoram para responder, não aparecem no Google e decidem sem olhar os números. É isso que a Flateka resolve.</p></div></section>
+
+<section class="hpin"><div class="hpin-inner">
+<div class="hpin-head wrap"><span class="eyebrow">Como trabalhamos</span><h2>Do primeiro papo ao resultado</h2><p class="muted">Role para ver cada etapa</p></div>
+<div class="hpin-track">
+<div class="hcard"><span class="num">01</span><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4zM8 9h8M8 12h5"/></svg></span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje. Leva 20 minutos e é gratuita.</p></div>
+<div class="hcard"><span class="num">02</span><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 4.9 12l4.1 4M8 11h6"/></svg></span><h3>Diagnóstico</h3><p>Olhamos Google, Instagram, WhatsApp e site e mostramos onde está a maior perda.</p></div>
+<div class="hcard"><span class="num">03</span><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></span><h3>Implantação</h3><p>Montamos tudo, testamos com você e treinamos sua equipe para usar no dia a dia.</p></div>
+<div class="hcard"><span class="num">04</span><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><h3>Acompanhamento</h3><p>Relatório todo mês e ajustes para melhorar sempre. Você fala direto com quem fez.</p></div>
+<div class="hcard dark"><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.6A8 8 0 1 1 9 18.5zM9 9.5c.5 2 2 3.5 4 4"/></svg></span><h3>Vamos começar?</h3><p>Chame no WhatsApp e marque a primeira conversa.</p><a class="btn light" href="https://wa.me/5521971775223?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flateka%20e%20quero%20conversar." target="_blank" rel="noopener">Agendar agora</a></div>
 </div></div></section>
+
+<section class="section"><div class="wrap"><div class="two">
+<div><span class="eyebrow">Antes e depois</span><h2 class="split">Arraste e veja a diferença</h2><p class="lead rv">Um perfil no Google sem cuidado perde cliente para o concorrente da esquina. Arraste a barra para comparar.</p><p class="note"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h6M9 17h6"/></svg> Exemplo ilustrativo com empresa fictícia.</p></div>
+<div class="compare rv" id="compare" style="--pos:50%">
+<div class="cmp-side before"><div class="gp"><div class="gp-photos empty"><span></span><span></span><span></span></div><b>Studio Bela Forma</b><div class="gp-r"><span>3,6</span><span class="stars" style="opacity:.5">★★★★☆</span><small>(7)</small></div>
+<small class="muted">Salão de beleza</small><div class="gp-bad">Horário não informado</div>
+<div class="gp-btns"><span>Ligar</span><span>Rotas</span></div>
+<div class="gp-rev"><b>Carlos R.</b> ★★☆☆☆<br>Mandei mensagem e ninguém respondeu.<em class="no">Sem resposta</em></div></div></div>
+<div class="cmp-side after"><div class="gp"><div class="gp-photos"><img src="https://images.unsplash.com/photo-1675034743339-0b0747047727?auto=format&fit=crop&w=400&q=75" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=400&q=75" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=400&q=75" alt="" loading="lazy"></div><b>Studio Bela Forma</b><div class="gp-r"><span>4,9</span><span class="stars">★★★★★</span><small>(128)</small></div>
+<small class="muted">Salão de beleza · Centro, Nova Iguaçu</small><div class="gp-ok">Aberto agora · fecha às 19h</div>
+<div class="gp-btns"><span>Ligar</span><span>Rotas</span><span>Agendar</span><span>Site</span></div>
+<div class="gp-rev"><b>Mariana S.</b> ★★★★★<br>Atendimento ótimo e consegui marcar pelo WhatsApp na hora.<em>Resposta do proprietário</em></div></div></div>
+<div class="cmp-handle" role="slider" tabindex="0" aria-label="Comparar antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></div>
+<span class="cmp-tag l">Antes</span><span class="cmp-tag r">Depois</span>
+</div></div></div></section>
 
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">Para quem é</span><h2 class="split">Feito para o comércio da região</h2></div>
@@ -190,6 +210,7 @@
 <div class="big-word" aria-hidden="true">Flateka</div>
 <div class="copyright"><span>© <span id="year">2026</span> Flateka. Nova Iguaçu, RJ.</span><button data-copy="https://flateka.web.app" data-msg="Link copiado" class="muted" style="text-decoration:underline;text-underline-offset:3px">Copiar link do site</button></div>
 </div></footer>
+<button class="totop" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
 <div class="mbar"><a class="btn" href="https://wa.me/5521971775223?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Flateka%20e%20quero%20conversar." target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1.2-3.6A8 8 0 1 1 9 18.5zM9 9.5c.5 2 2 3.5 4 4"/></svg> Agendar conversa pelo WhatsApp</a></div>
 <script>window.SERVICES = {"raiox": {"title": "Raio-X digital", "price": "R$ 197 a R$ 297", "img": "https://images.unsplash.com/photo-1753351052363-53ce102830eb?auto=format&fit=crop&w=1200&q=75", "text": "Analisamos Google, Instagram, WhatsApp e site e mostramos o que está fazendo você perder clientes.", "items": ["Nota de 0 a 100 para cada canal", "Comparação com 3 concorrentes da região", "Plano de ação em ordem de prioridade", "Reunião de 30 minutos para explicar tudo"]}, "atendimento": {"title": "Atendimento automático", "price": "a partir de R$ 250/mês", "img": "https://images.unsplash.com/photo-1687293233269-c6df38c3662f?auto=format&fit=crop&w=1200&q=75", "text": "Seu cliente pergunta preço, horário ou endereço e recebe a resposta certa em segundos, sem você parar o que está fazendo.", "items": ["Cardápio de respostas com a sua cara", "Envio para um atendente quando precisa", "Lembretes de horário e de retorno", "Relatório mensal de mensagens"]}, "agenda": {"title": "Agendamento online", "price": "incluso no plano Atendimento", "img": "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=1200&q=75", "text": "Menos faltas e menos troca de mensagens para marcar horário. Funciona pelo WhatsApp, Instagram ou link.", "items": ["Agenda por profissional ou serviço", "Lembrete automático um dia antes", "Bloqueio de horários e folgas", "Link para colocar na bio"]}, "placas": {"title": "Placas NFC e QR", "price": "a partir de R$ 60", "img": "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=1200&q=75", "text": "Placas de acrílico com chip NFC e QR code para pedir avaliação no momento em que o cliente está satisfeito.", "items": ["Modelos Google e Instagram", "7 cores de acrílico", "Funciona em qualquer celular", "Link pode ser trocado depois"]}, "dashboard": {"title": "Painéis em Power BI", "price": "a partir de R$ 500", "img": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=75", "text": "Juntamos suas planilhas e sistemas num painel claro, para você decidir olhando números e não no achismo.", "items": ["Faturamento por dia, produto e vendedor", "Margem e ticket médio", "Clientes que pararam de comprar", "Acesso pelo celular"]}, "site": {"title": "Sites simples", "price": "a partir de R$ 800", "img": "https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&fit=crop&w=1200&q=75", "text": "Um site que carrega rápido no celular, aparece no Google e leva o cliente direto para a conversa.", "items": ["Pronto em até 7 dias", "Domínio e hospedagem orientados", "Botão de WhatsApp e mapa", "Você pede ajustes por 30 dias"]}, "maps": {"title": "Perfil no Google Maps", "price": "sob consulta", "img": "https://images.unsplash.com/photo-1556741533-6e6a62bd8b49?auto=format&fit=crop&w=1200&q=75", "text": "Criamos ou arrumamos seu perfil no Google com fotos, horários, categorias e respostas às avaliações.", "items": ["Categorias e palavras certas", "Fotos e horários atualizados", "Respostas modelo para avaliações", "Verificação do perfil"]}};</script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>

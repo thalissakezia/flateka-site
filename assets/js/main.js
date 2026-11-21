@@ -317,8 +317,8 @@ void main(){
     $$(".opt", q).forEach((o) => o.addEventListener("click", () => {
       const st = o.closest(".q-step"), i = steps.indexOf(st);
       ans[st.dataset.k] = o.dataset.v;
-      if (i + 1 < steps.length - 1) go(i + 1);
-      else { result(); go(steps.length - 1); }
+      $$(".opt", st).forEach((x) => x.classList.toggle("picked", x === o));
+      setTimeout(() => { if (i + 1 < steps.length - 1) go(i + 1); else { result(); go(steps.length - 1); } }, 280);
     }));
     $$("[data-restart]", q).forEach((b) => b.addEventListener("click", () => go(0)));
     function result() {
@@ -417,10 +417,129 @@ void main(){
     });
   }
 
+
+  /* ---------- barra de progresso e voltar ao topo ---------- */
+  function progress() {
+    const bar = $(".progress"), top = $(".totop");
+    const upd = () => {
+      const h = document.documentElement.scrollHeight - innerHeight, p = h > 0 ? scrollY / h : 0;
+      if (bar) bar.style.transform = `scaleX(${p})`;
+      if (top) { top.style.setProperty("--p", p); top.classList.toggle("on", scrollY > 700); }
+    };
+    addEventListener("scroll", upd, { passive: true }); upd();
+    if (top) top.addEventListener("click", () => lenis ? lenis.scrollTo(0, { duration: 1.4 }) : scrollTo({ top: 0, behavior: "smooth" }));
+  }
+
+  /* ---------- transição entre páginas ---------- */
+  function transitions() {
+    const c = $(".curtain"); if (!c) return;
+    if (calm) { c.style.display = "none"; return; }
+    requestAnimationFrame(() => setTimeout(() => c.classList.add("out"), 120));
+    addEventListener("pageshow", (e) => { if (e.persisted) { c.classList.remove("in"); c.classList.add("out"); } });
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest("a[href]");
+      if (!a || a.target === "_blank" || e.metaKey || e.ctrlKey) return;
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      e.preventDefault();
+      c.classList.remove("out"); c.classList.add("prep");
+      requestAnimationFrame(() => { c.classList.remove("prep"); c.classList.add("in"); });
+      setTimeout(() => (location.href = a.href), 520);
+    });
+  }
+
+  /* ---------- efeito de clique (ondinha) ---------- */
+  function ripples() {
+    document.addEventListener("pointerdown", (e) => {
+      const el = e.target.closest(".btn, .opt, .qty button, .seg button, .c-item, .plan, .shot");
+      if (!el) return;
+      const r = el.getBoundingClientRect(), d = Math.max(r.width, r.height);
+      const s = document.createElement("span"); s.className = "ripple";
+      s.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+      if (!el.classList.contains("btn")) s.style.background = "rgba(0,118,108,.18)";
+      el.append(s); setTimeout(() => s.remove(), 700);
+    });
+    if (!touch) $$(".btn").forEach((b) => b.addEventListener("pointermove", (e) => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty("--bx2", e.clientX - r.left + "px"); b.style.setProperty("--by2", e.clientY - r.top + "px");
+    }));
+    $$(".plan, .extra, .step").forEach((el) => el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", e.clientX - r.left + "px"); el.style.setProperty("--my", e.clientY - r.top + "px");
+    }));
+    $$("[data-copy]").forEach((b) => b.addEventListener("click", () => { b.classList.remove("copied"); void b.offsetWidth; b.classList.add("copied"); }));
+  }
+
+  /* ---------- rótulo no cursor ---------- */
+  function cursorLabel() {
+    if (touch) return;
+    const l = document.createElement("div"); l.className = "cursor-label"; document.body.append(l);
+    addEventListener("pointermove", (e) => { l.style.left = e.clientX + "px"; l.style.top = e.clientY + "px"; });
+    $$("[data-cursor]").forEach((el) => {
+      el.addEventListener("pointerenter", () => { l.textContent = el.dataset.cursor; l.classList.add("on"); });
+      el.addEventListener("pointerleave", () => l.classList.remove("on"));
+    });
+  }
+
+  /* ---------- antes e depois ---------- */
+  function compare() {
+    const c = $("#compare"); if (!c) return;
+    const h = $(".cmp-handle", c);
+    const set = (p) => { p = Math.max(3, Math.min(97, p)); c.style.setProperty("--pos", p + "%"); h.setAttribute("aria-valuenow", Math.round(p)); };
+    const fromX = (x) => { const r = c.getBoundingClientRect(); set((x - r.left) / r.width * 100); };
+    let drag = false;
+    c.addEventListener("pointerdown", (e) => { drag = true; c.classList.add("drag"); c.setPointerCapture(e.pointerId); fromX(e.clientX); });
+    c.addEventListener("pointermove", (e) => { if (drag) fromX(e.clientX); });
+    c.addEventListener("pointerup", () => { drag = false; c.classList.remove("drag"); });
+    h.addEventListener("keydown", (e) => { const v = +h.getAttribute("aria-valuenow"); if (e.key === "ArrowLeft") set(v - 5); if (e.key === "ArrowRight") set(v + 5); });
+    if (window.gsap && !calm) {
+      const o = { p: 50 };
+      gsap.timeline({ scrollTrigger: { trigger: c, start: "top 70%" } })
+        .to(o, { p: 22, duration: .8, ease: "power2.inOut", onUpdate: () => set(o.p) })
+        .to(o, { p: 78, duration: 1.1, ease: "power2.inOut", onUpdate: () => set(o.p) })
+        .to(o, { p: 50, duration: .8, ease: "power2.inOut", onUpdate: () => set(o.p) });
+    }
+  }
+
+  /* ---------- efeitos que dependem do GSAP ---------- */
+  function scrollFx() {
+    const g = window.gsap && !calm;
+    // frase que acende palavra por palavra
+    $$(".scrub").forEach((p) => {
+      const keys = ["demoram", "responder,", "Google", "números.", "Flateka"];
+      p.innerHTML = p.textContent.split(" ").map((w) => `<span class="sw2${keys.includes(w) ? " key" : ""}">${w}</span>`).join(" ");
+      const ws = $$(".sw2", p);
+      if (!g) { ws.forEach((w) => w.classList.add("lit")); return; }
+      ScrollTrigger.create({ trigger: p, start: "top 80%", end: "bottom 45%", scrub: true,
+        onUpdate: (st) => { const n = Math.round(st.progress * ws.length); ws.forEach((w, i) => w.classList.toggle("lit", i < n)); } });
+    });
+    // rolagem horizontal fixa
+    $$(".hpin").forEach((sec) => {
+      const track = $(".hpin-track", sec);
+      if (!g || innerWidth < 760) { sec.classList.add("no-pin"); return; }
+      const dist = () => track.scrollWidth - innerWidth + 40;
+      gsap.to(track, { x: () => -dist(), ease: "none",
+        scrollTrigger: { trigger: sec, start: "top top", end: () => "+=" + dist(), pin: true, scrub: 1, invalidateOnRefresh: true } });
+      $$(".hcard", sec).forEach((c, i) => gsap.from(c, { rotate: 4, y: 60, opacity: .3, scrollTrigger: { trigger: sec, start: () => `top+=${i * 220} top`, end: () => `top+=${i * 220 + 300} top`, scrub: true } }));
+    });
+    if (!g) return;
+    // fotos que abrem ao entrar na tela
+    $$(".svc-img, .photo.p1, .car-item .im, .scard img, .shot .im").forEach((el) => gsap.fromTo(el, { clipPath: "inset(14% 10% 14% 10% round 28px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1.3, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } }));
+    // cartões empilhados diminuem quando o próximo chega
+    const sc = $$(".scard");
+    sc.forEach((c, i) => { if (i < sc.length - 1) gsap.to(c, { scale: .92 + i * .015, opacity: .55, ease: "none", scrollTrigger: { trigger: sc[i + 1], start: "top 85%", end: "top 30%", scrub: true } }); });
+    // planos entram com leve giro
+    $$(".plan").forEach((p, i) => gsap.from(p, { rotateY: i % 2 ? -14 : 14, transformPerspective: 900, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: p, start: "top 90%" } }));
+    // títulos de seção mudam de peso ao passar
+    $$(".mock-sec").forEach((m) => gsap.fromTo(m, { scale: .94, borderRadius: "80px" }, { scale: 1, borderRadius: "48px", ease: "none", scrollTrigger: { trigger: m, start: "top bottom", end: "top 30%", scrub: true } }));
+    ScrollTrigger.refresh();
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.body.append(toastEl, modal);
     background(); header(); motion(); pointerFx(); copyBtns(); tips(); services(); skeletons();
     mockTabs(); quiz(); calc(); carousel(); plates(); contact();
+    progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
     const y = $("#year"); if (y) y.textContent = new Date().getFullYear();
   });
 })();

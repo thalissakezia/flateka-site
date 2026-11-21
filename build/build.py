@@ -102,6 +102,10 @@ SERVICES = {
 
 
 def head(title, desc):
+    return _head(title, desc).replace("LOGOMARK", LOGO)
+
+
+def _head(title, desc):
     return f'''<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -121,6 +125,8 @@ def head(title, desc):
 </head>
 <body>
 <canvas id="bg" aria-hidden="true"></canvas><div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="curtain" aria-hidden="true"><span class="curtain-logo">LOGOMARK</span></div>
 '''
 
 
@@ -167,6 +173,7 @@ def footer():
 <div class="big-word" aria-hidden="true">Flateka</div>
 <div class="copyright"><span>© <span id="year">2026</span> Flateka. Nova Iguaçu, RJ.</span><button data-copy="https://flateka.web.app" data-msg="Link copiado" class="muted" style="text-decoration:underline;text-underline-offset:3px">Copiar link do site</button></div>
 </div></footer>
+<button class="totop" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/></svg>{ico("arrow")}</button>
 <div class="mbar"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">{ico("wa")} Agendar conversa pelo WhatsApp</a></div>
 <script>window.SERVICES = {json.dumps({k: {kk: vv for kk, vv in v.items() if kk in ("title", "price", "img", "text", "items")} for k, v in SERVICES.items()}, ensure_ascii=False)};</script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
@@ -189,7 +196,7 @@ def page_intro(eyebrow, title, lead):
 
 def svc_card(k, wide=False):
     s = SERVICES[k]
-    return f'''<button class="svc{' wide' if wide else ''}" id="{k}" data-svc="{k}" data-spot data-tilt="3">
+    return f'''<button data-cursor="Abrir" class="svc{' wide' if wide else ''}" id="{k}" data-svc="{k}" data-spot data-tilt="3">
 <div class="svc-img skel"><img src="{u(P_of(k), 900)}" alt="" loading="lazy"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic">{ico(s["icon"])}</span><span class="price-tag">{s["price"]}</span></div>
 <h3>{s["title"]}</h3><p>{s["short"]}</p><span class="more">Ver detalhes {ico("arrow")}</span></div>
@@ -268,6 +275,19 @@ def plate_mock(color="azul"):
 <div class="pl-wave"><span class="pl-badge">{ico("star")}</span></div>
 <div class="pl-bot"><div class="pl-nfc">{nfc}<span>APROXIME O CELULAR</span></div><div class="qr">{qr_svg()}</div></div>
 </div></div>'''
+
+
+def gprofile(good):
+    if good:
+        img = f'<div class="gp-photos">' + "".join(f'<img src="{u(P[k], 400)}" alt="" loading="lazy">' for k in ("salao3", "salao", "salao2")) + "</div>"
+        return f'''<div class="gp">{img}<b>Studio Bela Forma</b><div class="gp-r"><span>4,9</span><span class="stars">★★★★★</span><small>(128)</small></div>
+<small class="muted">Salão de beleza · Centro, Nova Iguaçu</small><div class="gp-ok">Aberto agora · fecha às 19h</div>
+<div class="gp-btns"><span>Ligar</span><span>Rotas</span><span>Agendar</span><span>Site</span></div>
+<div class="gp-rev"><b>Mariana S.</b> ★★★★★<br>Atendimento ótimo e consegui marcar pelo WhatsApp na hora.<em>Resposta do proprietário</em></div></div>'''
+    return '''<div class="gp"><div class="gp-photos empty"><span></span><span></span><span></span></div><b>Studio Bela Forma</b><div class="gp-r"><span>3,6</span><span class="stars" style="opacity:.5">★★★★☆</span><small>(7)</small></div>
+<small class="muted">Salão de beleza</small><div class="gp-bad">Horário não informado</div>
+<div class="gp-btns"><span>Ligar</span><span>Rotas</span></div>
+<div class="gp-rev"><b>Carlos R.</b> ★★☆☆☆<br>Mandei mensagem e ninguém respondeu.<em class="no">Sem resposta</em></div></div>'''
 
 
 def bullets(items):
@@ -352,14 +372,26 @@ def index():
 <div><span class="eyebrow">Calculadora</span><h2 class="split">Quanto custa demorar para responder?</h2><p class="lead rv">Mexa nos controles com os números da sua empresa. A conta considera que 3 em cada 10 conversas viram venda. <span class="info" tabindex="0" data-tip="Média de conversão de conversas no WhatsApp em pequenos comércios. Ajuste mentalmente para o seu caso.">?</span></p></div>
 </div></div></section>
 
-<section class="section"><div class="wrap">
-<div class="center"><span class="eyebrow">Como trabalhamos</span><h2 class="split">Do primeiro papo ao resultado</h2></div>
-<div class="steps" data-stagger style="margin-top:50px">
-<div class="step"><span class="ic">{ico("chat")}</span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje.</p></div>
-<div class="step"><span class="ic">{ico("raiox")}</span><h3>Diagnóstico</h3><p>Olhamos seus canais e mostramos onde está a maior perda.</p></div>
-<div class="step"><span class="ic">{ico("tool")}</span><h3>Implantação</h3><p>Montamos tudo e treinamos você e sua equipe.</p></div>
-<div class="step"><span class="ic">{ico("trend")}</span><h3>Acompanhamento</h3><p>Relatório todo mês e ajustes para melhorar sempre.</p></div>
+<section class="section statement"><div class="wrap"><p class="scrub">Pequenas empresas não perdem clientes por falta de qualidade. Perdem porque demoram para responder, não aparecem no Google e decidem sem olhar os números. É isso que a Flateka resolve.</p></div></section>
+
+<section class="hpin"><div class="hpin-inner">
+<div class="hpin-head wrap"><span class="eyebrow">Como trabalhamos</span><h2>Do primeiro papo ao resultado</h2><p class="muted">Role para ver cada etapa</p></div>
+<div class="hpin-track">
+<div class="hcard"><span class="num">01</span><span class="ic">{ico("chat")}</span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje. Leva 20 minutos e é gratuita.</p></div>
+<div class="hcard"><span class="num">02</span><span class="ic">{ico("raiox")}</span><h3>Diagnóstico</h3><p>Olhamos Google, Instagram, WhatsApp e site e mostramos onde está a maior perda.</p></div>
+<div class="hcard"><span class="num">03</span><span class="ic">{ico("tool")}</span><h3>Implantação</h3><p>Montamos tudo, testamos com você e treinamos sua equipe para usar no dia a dia.</p></div>
+<div class="hcard"><span class="num">04</span><span class="ic">{ico("trend")}</span><h3>Acompanhamento</h3><p>Relatório todo mês e ajustes para melhorar sempre. Você fala direto com quem fez.</p></div>
+<div class="hcard dark"><span class="ic">{ico("wa")}</span><h3>Vamos começar?</h3><p>Chame no WhatsApp e marque a primeira conversa.</p><a class="btn light" href="{WA_MSG}" target="_blank" rel="noopener">Agendar agora</a></div>
 </div></div></section>
+
+<section class="section"><div class="wrap"><div class="two">
+<div><span class="eyebrow">Antes e depois</span><h2 class="split">Arraste e veja a diferença</h2><p class="lead rv">Um perfil no Google sem cuidado perde cliente para o concorrente da esquina. Arraste a barra para comparar.</p><p class="note">{ico("doc")} Exemplo ilustrativo com empresa fictícia.</p></div>
+<div class="compare rv" id="compare" style="--pos:50%">
+<div class="cmp-side before">{gprofile(False)}</div>
+<div class="cmp-side after">{gprofile(True)}</div>
+<div class="cmp-handle" role="slider" tabindex="0" aria-label="Comparar antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span>{ico("left")}{ico("right")}</span></div>
+<span class="cmp-tag l">Antes</span><span class="cmp-tag r">Depois</span>
+</div></div></div></section>
 
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">Para quem é</span><h2 class="split">Feito para o comércio da região</h2></div>
@@ -389,6 +421,13 @@ def servicos():
     s += f'''<section class="section" style="padding-top:20px"><div class="wrap">
 <div class="services" data-stagger>{svc_card("raiox", True)}{svc_card("atendimento", True)}{svc_card("agenda")}{svc_card("placas")}{svc_card("dashboard")}{svc_card("site", True)}{svc_card("maps", True)}</div>
 </div></section>
+<section class="section"><div class="wrap"><div class="center" style="margin-bottom:50px"><span class="eyebrow">Por que a Flateka</span><h2 class="split">O que você ganha</h2></div>
+<div class="stack">
+<div class="scard" style="--i:0"><span class="ic">{ico("clock")}</span><div><h3>Tempo de volta</h3><p>Pare de responder a mesma pergunta 30 vezes por dia. O atendimento automático cuida disso.</p></div><img src="{u(P["balcao"], 700)}" alt="" loading="lazy"></div>
+<div class="scard" style="--i:1"><span class="ic">{ico("star")}</span><div><h3>Mais avaliações</h3><p>Com a placa no balcão, o cliente avalia na hora em que está satisfeito.</p></div><img src="{u(P["qr"], 700)}" alt="" loading="lazy"></div>
+<div class="scard" style="--i:2"><span class="ic">{ico("bars")}</span><div><h3>Decisão com números</h3><p>Saiba o que vende, o que dá lucro e quais clientes sumiram, num painel simples.</p></div><img src="{u(P["dash"], 700)}" alt="" loading="lazy"></div>
+<div class="scard" style="--i:3"><span class="ic">{ico("user")}</span><div><h3>Atendimento de perto</h3><p>Você fala com quem fez o trabalho, sem central de atendimento e sem robô para pedir ajuda.</p></div><img src="{u(P["cafe"], 700)}" alt="" loading="lazy"></div>
+</div></div></section>
 <section class="section mock-sec"><div class="wrap"><div class="two">
 <div class="mock-copy"><span class="eyebrow">Exemplo</span><h3>Um salão com o atendimento no automático</h3>{bullets(["O cliente pergunta e já recebe os horários livres", "Marca sozinho e ganha lembrete", "A dona só aparece quando precisa"])}</div>
 {phone_chat()}
@@ -475,7 +514,7 @@ def exemplos():
         ("top-produtos.png", "Produtos mais vendidos", "Ranking para decidir estoque e promoções."),
         ("frete-medio.png", "Frete médio por loja", "Onde o custo de entrega está pesando mais."),
     ]
-    g = "".join(f'<button class="shot" data-zoom="assets/img/{f}" data-title="{t}" data-alt="{t}"><div class="im skel"><img src="assets/img/{f}" alt="{t}" loading="lazy"></div><div class="tx"><h3>{t}</h3><p>{d}</p></div></button>' for f, t, d in shots)
+    g = "".join(f'<button data-cursor="Ampliar" class="shot" data-zoom="assets/img/{f}" data-title="{t}" data-alt="{t}"><div class="im skel"><img src="assets/img/{f}" alt="{t}" loading="lazy"></div><div class="tx"><h3>{t}</h3><p>{d}</p></div></button>' for f, t, d in shots)
     apps = [
         ("trend", "Otimizador de preços", "Sugere preço de venda a partir de custo, margem e concorrência.", "https://github.com/thalissakezia/otimizador-de-precos-ia"),
         ("spark", "Leitor de dados", "Envia uma planilha e recebe um resumo com os principais pontos.", "https://github.com/thalissakezia/AI-Data-Insight"),
