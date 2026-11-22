@@ -182,6 +182,8 @@ def footer():
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
 <script src="assets/js/main.js?v=__VER__" defer></script>
+<script type="importmap">{{"imports":{{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}}}</script>
+<script type="module" src="assets/js/hero3d.js?v=__VER__"></script>
 </body>
 </html>
 '''
@@ -300,9 +302,9 @@ def bullets(items):
 def index():
     s = head("Flateka | Consultoria digital para empresas", "Atendimento automático, agendamento online, placas de avaliação, painéis em Power BI e sites para empresas.")
     s += header("index.html")
-    s += f'''<section class="hero"><div class="wrap"><div class="hero-grid">
+    s += f'''<section class="hero"><div class="hero3d" aria-hidden="true"></div><div class="wrap"><div class="hero-grid">
 <div>
-<span class="eyebrow rv">Consultoria digital · 100% online</span>
+<span class="eyebrow rv">Consultoria digital · 100% online</span><span class="drag-hint">Arraste o símbolo 3D</span>
 <h1 class="split">Sua empresa <span class="hl">atendendo</span> e vendendo mesmo quando você está ocupado</h1>
 <p class="lead rv">Organizamos o digital da sua empresa: WhatsApp que responde sozinho, agenda online, avaliações no Google e números claros para decidir.</p>
 <div class="btns rv"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Agendar conversa gratuita {ico("arrow")}</a><a class="btn ghost" href="#teste">Descobrir o que eu preciso</a></div>
