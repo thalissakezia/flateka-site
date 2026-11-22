@@ -962,3 +962,15 @@ body { background: #f8faf9; }
 .drag-hint { display: none; }
 @media (hover: hover) { .drag-hint { display: block; font-size: 12px; color: var(--muted); margin: -10px 0 14px; } }
 @media (max-width: 1020px) { .hero { min-height: 0; } .hero3d { height: 420px; top: auto; bottom: 0; } }
+
+/* símbolo 3D em CSS (funciona em qualquer celular) */
+.logo3d { position: absolute; left: 50%; top: 50%; width: min(46vw, 520px); aspect-ratio: 1376 / 560; transform-style: preserve-3d; transform: translate(-50%, -50%) perspective(1000px) rotateX(var(--lx, 10deg)) rotateY(var(--ly, -20deg)); pointer-events: none; }
+.logo3d span { position: absolute; inset: 0; transform: translateZ(calc(var(--z) * -2.2px)); }
+.logo3d span svg { width: 100%; height: 100%; }
+.logo3d span:not(:first-child) svg g { stroke: #0b1f3a; }
+.logo3d span:not(:first-child) svg g + g { stroke: #05615b; }
+.logo3d span:first-child { filter: drop-shadow(0 30px 40px rgba(16, 43, 78, .28)); }
+.hero3d.css3d { opacity: 1; }
+.hero3d.webgl .logo3d { display: none; }
+@media (min-width: 1021px) { .logo3d { left: 30%; top: 72%; width: 30vw; opacity: .12; } .hero3d.css3d .logo3d { opacity: 1; left: 50%; top: 50%; width: 24vw; } }
+@media (max-width: 1020px) { .hero3d.css3d { position: relative; height: 220px; inset: auto; margin: 10px 0 -10px; } .logo3d { width: 70vw; } }

@@ -546,11 +546,33 @@ void main(){
     ScrollTrigger.refresh();
   }
 
+  /* símbolo 3D em CSS quando o WebGL não carrega */
+  function logo3d() {
+    const box = $(".hero3d"); if (!box) return;
+    setTimeout(() => {
+      if (box.classList.contains("on")) { box.classList.add("webgl"); return; }
+      box.classList.add("css3d");
+      const hero = $(".hero"); if (hero && innerWidth <= 1020) hero.querySelector(".hero-grid > div").after(box);
+      const l = $(".logo3d", box);
+      let tx = -20, ty = 10, x = -20, y = 10, drag = false, lx = 0, spin = 0;
+      addEventListener("pointermove", (e) => { if (drag) { spin += (e.clientX - lx) * .6; lx = e.clientX; } else if (!touch) { tx = (e.clientX / innerWidth - .5) * 50; ty = (e.clientY / innerHeight - .5) * -30; } });
+      box.style.pointerEvents = "auto";
+      box.addEventListener("pointerdown", (e) => { drag = true; lx = e.clientX; });
+      addEventListener("pointerup", () => (drag = false));
+      (function f(t) {
+        const idle = calm ? 0 : Math.sin(t / 1400) * 18;
+        x += (tx + idle + spin - x) * .08; y += (ty + Math.cos(t / 1800) * 8 + scrollY * .03 - y) * .08;
+        l.style.setProperty("--ly", x + "deg"); l.style.setProperty("--lx", y + "deg");
+        requestAnimationFrame(f);
+      })(0);
+    }, 2500);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.body.append(toastEl, modal);
     carousel(); background(); header(); motion(); pointerFx(); copyBtns(); tips(); services(); skeletons();
     mockTabs(); quiz(); calc(); plates(); contact();
-    phones(); progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
+    logo3d(); phones(); progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
     const y = $("#year"); if (y) y.textContent = new Date().getFullYear();
   });
 })();

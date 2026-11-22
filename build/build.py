@@ -300,9 +300,10 @@ def bullets(items):
 
 # ---------- páginas ----------
 def index():
+    layers = "".join(f'<span style="--z:{i}">{LOGO}</span>' for i in range(14))
     s = head("Flateka | Consultoria digital para empresas", "Atendimento automático, agendamento online, placas de avaliação, painéis em Power BI e sites para empresas.")
     s += header("index.html")
-    s += f'''<section class="hero"><div class="hero3d" aria-hidden="true"></div><div class="wrap"><div class="hero-grid">
+    s += f'''<section class="hero"><div class="hero3d" aria-hidden="true"><div class="logo3d">{layers}</div></div><div class="wrap"><div class="hero-grid">
 <div>
 <span class="eyebrow rv">Consultoria digital · 100% online</span><span class="drag-hint">Arraste o símbolo 3D</span>
 <h1 class="split">Sua empresa <span class="hl">atendendo</span> e vendendo mesmo quando você está ocupado</h1>
