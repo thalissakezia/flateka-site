@@ -117,10 +117,18 @@ def _head(title, desc):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<meta name="theme-color" content="#F4F0E8">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="canonical" href="https://flateka-b2653.web.app/__PAGE__">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://flateka-b2653.web.app/__PAGE__">
+<meta property="og:image" content="https://flateka-b2653.web.app/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfessionalService","name":"Flateka","description":"Consultoria digital: atendimento automático, agendamento online, placas de avaliação, painéis em Power BI e sites.","url":"https://flateka-b2653.web.app/","logo":"https://flateka-b2653.web.app/assets/img/og.png","email":"flateka.com@gmail.com","areaServed":"BR","contactPoint":{{"@type":"ContactPoint","contactType":"vendas","url":"https://wa.me/5521971775223"}}}}</script>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,12 +170,10 @@ def footer():
     links = "".join(f'<a href="{f}">{n}</a>' for f, n in PAGES)
     svc = "".join(f'<li><a href="servicos.html#{k}">{s["title"]}</a></li>' for k, s in list(SERVICES.items())[:5])
     return f'''</main>
-<footer class="footer"><div class="wrap"><div class="foot">
-<a class="logo" href="index.html">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a>
+<footer class="footer"><div class="wrap foot1">
+<a class="logo" href="index.html">{LOGO}<span class="lt">Flateka</span></a>
 <nav class="foot-links" aria-label="Rodapé">{links}</nav>
-<div class="foot-contact"><a class="ic-btn" href="{WA_MSG}" target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp">{ico("wa")}</a><button class="ic-btn" data-copy="{EMAIL}" data-msg="E-mail copiado" data-tip="Copiar e-mail" aria-label="Copiar e-mail">{ico("mail")}</button></div>
-</div>
-<div class="copyright"><span>© <span id="year">2026</span> Flateka</span><button data-copy="https://flateka-b2653.web.app" data-msg="Link copiado">Copiar link do site</button></div>
+<span class="foot-copy">© <span id="year">2026</span> Flateka · <button data-copy="{EMAIL}" data-msg="E-mail copiado">{EMAIL}</button></span>
 </div></footer>
 <button class="totop" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/></svg>{ico("arrow")}</button>
 <div class="mbar"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">{ico("wa")} Agendar conversa pelo WhatsApp</a></div>
@@ -193,7 +199,7 @@ def page_intro(eyebrow, title, lead):
 def svc_card(k, wide=False):
     s = SERVICES[k]
     return f'''<button data-cursor="Abrir" class="svc{' wide' if wide else ''}" id="{k}" data-svc="{k}" data-spot data-tilt="3">
-<div class="svc-img skel"><img src="{u(P_of(k), 900)}" alt="" loading="lazy"></div>
+<div class="svc-img skel"><img src="{u(P_of(k), 900)}" alt="" width="900" height="560" loading="lazy" decoding="async"></div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic">{ico(s["icon"])}</span><span class="price-tag">{s["price"]}</span></div>
 <h3>{s["title"]}</h3><p>{s["short"]}</p><span class="more">Ver detalhes {ico("arrow")}</span></div>
 </button>'''
@@ -296,33 +302,38 @@ def index():
     s += header("index.html")
     s += f'''<section class="hero"><div class="wrap"><div class="hero-grid">
 <div>
-<span class="badge-live rv"><i></i> Atendimento 100% online</span>
+<span class="eyebrow rv">Consultoria digital · 100% online</span>
 <h1 class="split">Sua empresa <span class="hl">atendendo</span> e vendendo mesmo quando você está ocupado</h1>
 <p class="lead rv">Organizamos o digital da sua empresa: WhatsApp que responde sozinho, agenda online, avaliações no Google e números claros para decidir.</p>
 <div class="btns rv"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Agendar conversa gratuita {ico("arrow")}</a><a class="btn ghost" href="#teste">Descobrir o que eu preciso</a></div>
 </div>
-<div class="hero-visual rv">
-<div class="photo p1"><img src="{u(P["loja"], 1100)}" alt="Atendente sorrindo no balcão de uma loja" fetchpriority="high"></div>
-<div class="photo p2" data-speed=".4"><img src="{u(P["qr"], 700)}" alt="Celular lendo um QR code" loading="lazy"></div>
-<div class="float-card fc1" data-speed=".6"><span class="ic">{ico("star")}</span><span><span class="stars">★★★★★</span><b>Nova avaliação</b>pela placa no balcão</span></div>
-<div class="float-card fc2" data-speed=".25"><span class="ic">{ico("chat")}</span><span><b>Respondido</b>agora no WhatsApp</span></div>
+<div class="hcard-dark rv" data-tilt="3">
+<span class="hd-label">Por onde começar</span>
+<strong>Raio-X digital</strong>
+<p>Um diagnóstico do seu Google, Instagram, WhatsApp e site, com nota de 0 a 100 e plano de ação.</p>
+<ul class="hd-list"><li><span>Google e Maps</span><i style="--w:72%"></i></li><li><span>Instagram</span><i style="--w:54%"></i></li><li><span>WhatsApp</span><i style="--w:38%"></i></li><li><span>Site</span><i style="--w:61%"></i></li></ul>
+<div class="hd-foot"><span>a partir de <b>R$ 197</b></span><a class="btn light small" href="servicos.html#raiox">Ver detalhes</a></div>
+<small class="hd-note">Notas ilustrativas</small>
 </div>
 </div>
-<div class="stats" data-stagger>
-<div class="stat"><b data-count="24" data-suf="h">24h</b><span>de atendimento por dia</span></div>
-<div class="stat"><b data-count="7" data-suf=" dias">7 dias</b><span>para entregar um site</span></div>
-<div class="stat"><b data-count="7">7</b><span>serviços sob medida</span></div>
-<div class="stat"><b data-count="0" data-pre="R$ ">R$ 0</b><span>pela primeira conversa</span></div>
-</div>
+
 </div></section>
 
-<div class="marquee" aria-hidden="true"><div class="marquee-track">{"".join(f"<span>{x}</span>" for x in ["Salões", "Clínicas", "Restaurantes", "Lojas", "Escritórios", "Consultórios", "Academias", "Pet shops", "Oficinas"] * 2)}</div></div>
+
 
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">O que fazemos</span><h2 class="split">Tudo que o seu cliente vê antes de comprar</h2><p class="lead rv">Os mais procurados. Veja todos na página de serviços.</p></div>
 <a class="btn ghost rv" href="servicos.html">Todos os serviços {ico("arrow")}</a></div>
 <div class="services" data-stagger>{svc_card("atendimento")}{svc_card("placas")}{svc_card("dashboard")}</div>
 </div></section>
+
+<section class="section"><div class="wrap">
+<div class="sec-head"><div><span class="eyebrow">Como trabalhamos</span><h2 class="split">Onde entramos</h2></div></div>
+<div class="numcards" data-stagger>
+<article><span class="n">01</span><strong>Diagnóstico</strong><p>Entendemos o negócio antes de propor qualquer coisa.</p></article>
+<article><span class="n">02</span><strong>Implantação</strong><p>Montamos atendimento, agenda, placas ou painel, com você junto.</p></article>
+<article><span class="n">03</span><strong>Acompanhamento</strong><p>Revisão todo mês com os números que importam.</p></article>
+</div></div></section>
 
 <section class="section mock-sec"><div class="wrap">
 <div class="center"><span class="eyebrow">Veja funcionando</span><h2 class="split">Como fica na prática</h2>
@@ -404,7 +415,7 @@ def svc_row(k):
     sv = SERVICES[k]
     items = "".join(f"<li>{ico('check')}<span>{i}</span></li>" for i in sv["items"])
     return f'''<article class="srow" id="{k}" data-spot>
-<div class="srow-img skel"><img src="{u(P_of(k), 800)}" alt="" loading="lazy"></div>
+<div class="srow-img skel"><img src="{u(P_of(k), 800)}" alt="" width="800" height="800" loading="lazy" decoding="async"></div>
 <div class="srow-main"><span class="ic">{ico(sv["icon"])}</span><h3>{sv["title"]}</h3><p class="muted">{WHO[k]}</p><b class="srow-price">{sv["price"]}</b></div>
 <div class="srow-det"><p>{sv["text"]}</p><ul>{items}</ul><a class="btn small" href="{WA}?text={sv["title"].replace(" ", "%20")}%20-%20quero%20saber%20mais" target="_blank" rel="noopener">Quero esse serviço {ico("arrow")}</a></div>
 </article>'''
@@ -571,9 +582,10 @@ def contato():
 if __name__ == "__main__":
     for name, fn in [("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
                      ("avulsos.html", avulsos), ("exemplos.html", exemplos), ("contato.html", contato)]:
-        (ROOT / name).write_text(fn().replace("__VER__", VER), encoding="utf-8")
+        pg = "" if name == "index.html" else name[:-5]
+        (ROOT / name).write_text(fn().replace("__VER__", VER).replace("__PAGE__", pg), encoding="utf-8")
     (ROOT / "assets/img/favicon.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#102B4E"/><svg x="6" y="20" width="52" height="24" ' + LOGO.split("<svg ", 1)[1].replace(' class="mark"', '').replace('#102B4E', '#FFFFFF').replace('#078F86', '#3CC4B8') + '</svg>')
     (ROOT / "404.html").write_text((head("Página não encontrada | Flateka", "Página não encontrada") + header("") +
                                    page_intro("Erro 404", "Essa página não existe", "Mas o resto do site está aqui.") +
-                                   '<div class="center"><a class="btn" href="index.html">Voltar ao início</a></div>' + footer()).replace("__VER__", VER), encoding="utf-8")
+                                   '<div class="center"><a class="btn" href="index.html">Voltar ao início</a></div>' + footer()).replace("__VER__", VER).replace("__PAGE__", ""), encoding="utf-8")
     print("ok")
