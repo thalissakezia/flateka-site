@@ -640,6 +640,7 @@ def panel_page(title, script):
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/panel.css?v=__VER__"></head>
 <body><header class="top"><a class="logo" href="index.html">{LOGO}Flateka</a><small>{title}</small></header>
 <div id="app"><div class="loading" style="padding:24px">Carregando...</div></div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script type="module" src="assets/js/{script}?v=__VER__"></script></body></html>
 '''
 

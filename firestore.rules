@@ -24,6 +24,33 @@ service cloud.firestore {
       allow read: if isAdmin() || resource.data.clienteEmail == me();
       allow write: if isAdmin();
     }
+    // placas: qualquer um lê (a placa precisa saber o destino); o dono edita a dele; placa livre pode ser vinculada
+    match /placas/{cod} {
+      allow get: if true;
+      allow list: if isAdmin() || (request.auth != null && resource.data.clienteEmail == me());
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (request.auth != null && resource.data.clienteEmail == me()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['titulo','tipo','destino']))
+        || (request.auth != null && resource.data.clienteEmail == '' && request.resource.data.clienteEmail == me()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['clienteEmail','cliente']));
+    }
+    // cada abertura da placa vira um acesso; ninguém edita depois
+    match /acessos/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['codigo','clienteEmail','dia','ts'])
+        && exists(/databases/$(db)/documents/placas/$(request.resource.data.codigo))
+        && get(/databases/$(db)/documents/placas/$(request.resource.data.codigo)).data.clienteEmail == request.resource.data.clienteEmail;
+      allow read: if isAdmin() || (request.auth != null && resource.data.clienteEmail == me());
+      allow update, delete: if isAdmin();
+    }
+    match /recados/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['codigo','clienteEmail','nota','msg','nome','dia'])
+        && request.resource.data.msg is string && request.resource.data.msg.size() <= 1000
+        && request.resource.data.nota is int && request.resource.data.nota >= 1 && request.resource.data.nota <= 5
+        && get(/databases/$(db)/documents/placas/$(request.resource.data.codigo)).data.clienteEmail == request.resource.data.clienteEmail;
+      allow read: if isAdmin() || (request.auth != null && resource.data.clienteEmail == me());
+      allow delete: if isAdmin();
+    }
     match /aprovacoes/{id} {
       allow read, write: if isAdmin();
     }

@@ -5,6 +5,7 @@ export const ADMINS = ["flateka.com@gmail.com"];
 const V = "11.0.2";
 let api = null;
 const UK = "fk-demo-user-" + (location.pathname.includes("admin") ? "a" : "c");
+export const SITE = "https://flateka-b2653.web.app";
 
 export const demo = !firebaseConfig;
 
@@ -51,6 +52,13 @@ const seed = () => {
       { id: "a1", titulo: "Responder Ana Souza", origem: "Vendas", detalhe: "Rascunho de proposta do plano Atendimento pronto no Gmail.", status: "pendente", criado: d(0) },
       { id: "a2", titulo: "Carrosséis da semana", origem: "Marketing", detalhe: "3 ideias de posts para o Instagram da Flateka.", status: "pendente", criado: d(1) },
     ],
+    placas: [
+      { id: "UA4R", codigo: "UA4R", clienteEmail: "cliente@exemplo.com", cliente: "Studio Bela Forma", titulo: "Balcão da recepção", tipo: "google", destino: "https://search.google.com/local/writereview?placeid=EXEMPLO", ativo: true, criado: d(25) },
+      { id: "K7MP", codigo: "K7MP", clienteEmail: "cliente@exemplo.com", cliente: "Studio Bela Forma", titulo: "Instagram no espelho", tipo: "instagram", destino: "https://instagram.com/exemplo", ativo: true, criado: d(25) },
+      { id: "H3XQ", codigo: "H3XQ", clienteEmail: "", cliente: "", titulo: "", tipo: "google", destino: "", ativo: true, criado: d(3) },
+    ],
+    acessos: Array.from({ length: 60 }, (_, i) => { const n = Math.floor(Math.random() * 29); const c = i % 3 ? "UA4R" : "K7MP"; return { id: "x" + i, codigo: c, clienteEmail: "cliente@exemplo.com", dia: d(n), ts: d(n) + "T12:00:00" }; }),
+    recados: [{ id: "m1", codigo: "UA4R", clienteEmail: "cliente@exemplo.com", nota: 3, msg: "Exemplo: demorei para ser atendida.", nome: "", dia: d(2) }],
     relatorios: [
       { id: "r1", clienteEmail: "cliente@exemplo.com", titulo: "Raio-X digital", data: d(18), link: "#" },
     ],
@@ -72,6 +80,15 @@ export async function list(col, where) {
   const q = where ? fs.query(fs.collection(D, col), fs.where(where[0], "==", where[1])) : fs.collection(D, col);
   const snap = await fs.getDocs(q);
   return snap.docs.map((x) => ({ id: x.id, ...x.data() }));
+}
+export async function get(col, id) {
+  if (demo) return (store()[col] || []).find((x) => x.id === id) || null;
+  const r = await api.fs.getDoc(api.fs.doc(api.D, col, id));
+  return r.exists() ? { id: r.id, ...r.data() } : null;
+}
+export async function set(col, id, data) {
+  if (demo) { const s = store(); const arr = (s[col] ||= []); const i = arr.findIndex((x) => x.id === id); if (i >= 0) arr[i] = { ...arr[i], ...data, id }; else arr.push({ ...data, id }); save(s); return; }
+  await api.fs.setDoc(api.fs.doc(api.D, col, id), data, { merge: true });
 }
 export async function add(col, data) {
   if (demo) { const s = store(); data.id = col[0] + Date.now(); (s[col] ||= []).unshift(data); save(s); return data.id; }

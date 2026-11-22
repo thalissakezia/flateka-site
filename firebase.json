@@ -29,6 +29,21 @@
             "value": "noindex"
           }
         ]
+      },
+      {
+        "source": "/p.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/p/**",
+        "destination": "/p.html"
       }
     ]
   },

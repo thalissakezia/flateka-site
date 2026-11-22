@@ -1,4 +1,5 @@
 import * as fb from "./fb.js";
+import * as P from "./placas.js";
 
 const $ = (s, c = document) => c.querySelector(s);
 const brl = (n) => Number(n || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -15,7 +16,7 @@ function shell(user) {
   root.innerHTML = `
   <aside class="side">
     <nav>
-      ${[["inicio", "Visão geral"], ["aprovar", "Para aprovar"], ["leads", "Contatos"], ["clientes", "Clientes"], ["financeiro", "Financeiro"]]
+      ${[["inicio", "Visão geral"], ["aprovar", "Para aprovar"], ["leads", "Contatos"], ["clientes", "Clientes"], ["placas", "Placas"], ["financeiro", "Financeiro"]]
         .map(([k, n]) => `<a href="#${k}" data-tab="${k}" class="${tab === k ? "on" : ""}">${n}</a>`).join("")}
     </nav>
     <div class="who">${esc(user.email)}<button id="sair">Sair</button></div>
@@ -29,7 +30,7 @@ function shell(user) {
 async function render() {
   const v = $("#view");
   v.innerHTML = `<div class="loading">Carregando...</div>`;
-  const views = { inicio, aprovar, leads, clientes, financeiro };
+  const views = { inicio, aprovar, leads, clientes, placas, financeiro };
   try { await (views[tab] || inicio)(v); } catch (e) { v.innerHTML = `<p class="err">Não foi possível carregar: ${esc(e.message)}</p>`; }
 }
 
@@ -153,6 +154,50 @@ async function financeiro(v) {
       render();
     };
   };
+}
+
+async function placas(v) {
+  const [PL, A, C, R] = await Promise.all([fb.list("placas"), fb.list("acessos"), fb.list("clientes"), fb.list("recados")]);
+  const livres = PL.filter((p) => !p.clienteEmail).length;
+  v.innerHTML = `<div class="head"><h1>Placas</h1><div class="acts"><input id="qtd" type="number" min="1" max="200" value="10" style="width:70px"><button class="btn-p" id="gerar">Gerar códigos</button></div></div>
+  ${P.kpis(P.stats(A))}
+  <p class="sub">${PL.length} placas · ${livres} livres para vincular. Cada placa abre ${esc(fb.SITE)}/p/CÓDIGO</p>
+  <div id="det"></div><div id="form"></div>
+  <div class="cols wide"><div><input id="busca" placeholder="Buscar código, nome ou cliente" class="search"><div class="pgrid" id="lista"></div></div>
+  <div class="box"><div class="head"><h2>Ranking de acessos</h2><select id="rper"><option value="7">7 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option></select></div><div id="rk">${P.ranking(PL, A, 30)}</div></div></div>`;
+  const draw = (q = "") => {
+    const t = q.toLowerCase();
+    const f = PL.filter((p) => !t || [p.codigo, p.titulo, p.cliente].some((x) => (x || "").toLowerCase().includes(t)));
+    $("#lista").innerHTML = f.map((p) => P.card(p, A, { admin: true })).join("") || `<p class="empty">Nenhuma placa. Gere os primeiros códigos.</p>`;
+    bind();
+  };
+  const bind = () => {
+    v.querySelectorAll("[data-ver]").forEach((b) => (b.onclick = () => { const p = PL.find((x) => x.codigo === b.dataset.ver); $("#det").innerHTML = P.detalhe(p, A, R); P.bindDetalhe($("#det"), p, A); $("#vclose").onclick = () => ($("#det").innerHTML = ""); $("#det").scrollIntoView({ behavior: "smooth" }); }));
+    v.querySelectorAll("[data-edit]").forEach((b) => (b.onclick = () => {
+      const p = PL.find((x) => x.codigo === b.dataset.edit);
+      $("#form").innerHTML = P.form(p, { admin: true, clientes: C }); $("#form").scrollIntoView({ behavior: "smooth" });
+      $("#pcx").onclick = () => ($("#form").innerHTML = "");
+      $("#pf").onsubmit = async (e) => { e.preventDefault(); await P.salvar(p.codigo, new FormData(e.target), C); render(); };
+    }));
+    v.querySelectorAll("[data-qr]").forEach((b) => (b.onclick = () => {
+      const c = b.dataset.qr;
+      $("#det").innerHTML = `<div class="box qrbox"><div class="head"><h2>Placa ${esc(c)}</h2><button id="vclose">Fechar</button></div>${P.qrImg(P.link(c), 220)}<code>${esc(P.link(c))}</code><p class="hint">Grave esse mesmo link no chip NFC da placa.</p></div>`;
+      $("#vclose").onclick = () => ($("#det").innerHTML = "");
+    }));
+  };
+  $("#busca").oninput = (e) => draw(e.target.value);
+  $("#rper").onchange = (e) => ($("#rk").innerHTML = P.ranking(PL, A, Number(e.target.value)));
+  $("#gerar").onclick = async () => {
+    const n = Math.min(200, Math.max(1, Number($("#qtd").value) || 1));
+    const usados = new Set(PL.map((p) => p.codigo)); let feitos = 0;
+    while (feitos < n) {
+      const c = P.novoCodigo(); if (usados.has(c)) continue; usados.add(c);
+      await fb.set("placas", c, { codigo: c, clienteEmail: "", cliente: "", titulo: "", tipo: "google", destino: "", ativo: true, criado: today() });
+      feitos++;
+    }
+    render();
+  };
+  draw();
 }
 
 function gate(user) {
