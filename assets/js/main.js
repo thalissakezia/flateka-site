@@ -373,8 +373,7 @@ void main(){
       view.addEventListener("pointermove", (e) => { if (!drag) return; const d = e.clientX - lx; lx = e.clientX; x += d; v = d; });
       const up = () => { if (!drag) return; drag = false; view.classList.remove("drag"); target = BASE; };
       view.addEventListener("pointerup", up); view.addEventListener("pointercancel", up);
-      addEventListener("scroll", () => { boost += (scrollY - lastY) * -0.35; lastY = scrollY; }, { passive: true });
-      const half = () => track.scrollWidth / 2;
+            const half = () => track.scrollWidth / 2;
       (function f() {
         if (!drag && !calm) { v += (target - v) * .06; x += v + boost; }
         boost *= .88;
@@ -419,26 +418,27 @@ void main(){
   /* ---------- formulário de contato ---------- */
   function contact() {
     const f = $("#contact"); if (!f) return;
-    f.addEventListener("submit", (e) => {
+    f.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const d = new FormData(f);
-      const txt = `Olá! Sou ${d.get("nome")}, da ${d.get("empresa") || "minha empresa"} (${d.get("segmento")}).\nInteresse: ${d.get("servico")}.\n${d.get("msg") || ""}`.trim();
-      toast("Abrindo o WhatsApp...");
-      setTimeout(() => window.open(waLink(txt), "_blank", "noopener"), 500);
+      const btn = $("button[type=submit]", f), d = new FormData(f);
+      if (d.get("_honey")) return;
+      btn.disabled = true; btn.style.opacity = ".6";
+      const body = { _subject: "Novo contato pelo site: " + d.get("nome"), Nome: d.get("nome"), Contato: d.get("contato"), Empresa: d.get("empresa"), Interesse: d.get("servico"), Mensagem: d.get("msg"), _template: "table" };
+      try {
+        const r = await fetch("https://formsubmit.co/ajax/flateka.com@gmail.com", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body) });
+        if (!r.ok) throw 0;
+        f.reset(); toast("Mensagem enviada. Respondemos em breve.");
+      } catch (_) { toast("Não foi possível enviar agora. Tente de novo."); }
+      btn.disabled = false; btn.style.opacity = "";
     });
   }
 
 
-  /* ---------- barra de progresso e voltar ao topo ---------- */
+  /* ---------- barra de progresso ---------- */
   function progress() {
-    const bar = $(".progress"), top = $(".totop");
-    const upd = () => {
-      const h = document.documentElement.scrollHeight - innerHeight, p = h > 0 ? scrollY / h : 0;
-      if (bar) bar.style.transform = `scaleX(${p})`;
-      if (top) { top.style.setProperty("--p", p); top.classList.toggle("on", scrollY > 700); }
-    };
+    const bar = $(".progress"); if (!bar) return;
+    const upd = () => { const h = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`; };
     addEventListener("scroll", upd, { passive: true }); upd();
-    if (top) top.addEventListener("click", () => lenis ? lenis.scrollTo(0, { duration: 1.4 }) : scrollTo({ top: 0, behavior: "smooth" }));
   }
 
   /* ---------- transição entre páginas ---------- */
@@ -462,7 +462,7 @@ void main(){
   /* ---------- efeito de clique (ondinha) ---------- */
   function ripples() {
     document.addEventListener("pointerdown", (e) => {
-      const el = e.target.closest(".btn, .opt, .qty button, .seg button, .c-item, .plan, .shot");
+      const el = e.target.closest(".btn, .opt, .qty button, .seg button, .shot");
       if (!el) return;
       const r = el.getBoundingClientRect(), d = Math.max(r.width, r.height);
       const s = document.createElement("span"); s.className = "ripple";
@@ -540,9 +540,9 @@ void main(){
     const sc = $$(".scard");
     sc.forEach((c, i) => { if (i < sc.length - 1) gsap.to(c, { scale: .92 + i * .015, opacity: .55, ease: "none", scrollTrigger: { trigger: sc[i + 1], start: "top 85%", end: "top 30%", scrub: true } }); });
     // planos entram com leve giro
-    $$(".plan").forEach((p, i) => gsap.from(p, { rotateY: i % 2 ? -14 : 14, transformPerspective: 900, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: p, start: "top 90%" } }));
+    
     // títulos de seção mudam de peso ao passar
-    $$(".mock-sec").forEach((m) => gsap.fromTo(m, { scale: .94, borderRadius: "80px" }, { scale: 1, borderRadius: "48px", ease: "none", scrollTrigger: { trigger: m, start: "top bottom", end: "top 30%", scrub: true } }));
+
     ScrollTrigger.refresh();
   }
 

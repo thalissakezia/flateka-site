@@ -74,7 +74,7 @@ SERVICES = {
                   short="Um diagnóstico de como sua empresa aparece na internet, com nota e plano de ação.",
                   text="Analisamos Google, Instagram, WhatsApp e site e mostramos o que está fazendo você perder clientes.",
                   items=["Nota de 0 a 100 para cada canal", "Comparação com 3 concorrentes da região", "Plano de ação em ordem de prioridade", "Reunião de 30 minutos para explicar tudo"]),
-    "atendimento": dict(title="Atendimento automático", price="a partir de R$ 250/mês", img=u(P["balcao"]), icon="chat",
+    "atendimento": dict(title="Atendimento automático", price="a partir de R$ 250/mês", img=u(P["salao2"]), icon="chat",
                         short="Respostas na hora no WhatsApp e no Instagram, até fora do horário.",
                         text="Seu cliente pergunta preço, horário ou endereço e recebe a resposta certa em segundos, sem você parar o que está fazendo.",
                         items=["Cardápio de respostas com a sua cara", "Envio para um atendente quando precisa", "Lembretes de horário e de retorno", "Relatório mensal de mensagens"]),
@@ -138,7 +138,6 @@ def _head(title, desc):
 <body>
 <canvas id="bg" aria-hidden="true"></canvas><div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
-<div class="curtain" aria-hidden="true"><span class="curtain-logo">LOGOMARK</span></div>
 '''
 
 
@@ -149,7 +148,6 @@ def header(active):
     return f'''<header class="header"><div class="wrap"><nav class="nav" aria-label="Principal">
 <a class="logo" href="index.html" aria-label="Flateka, início">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a>
 <ul class="menu">{links}</ul>
-<a class="btn small" href="{WA_MSG}" target="_blank" rel="noopener">Fale conosco</a>
 </nav></div></header>
 <main>
 '''
@@ -168,15 +166,19 @@ def cta(title="Vamos olhar o seu negócio juntos?", text="Uma conversa de 20 min
 
 def footer():
     links = "".join(f'<a href="{f}">{n}</a>' for f, n in PAGES)
-    svc = "".join(f'<li><a href="servicos.html#{k}">{s["title"]}</a></li>' for k, s in list(SERVICES.items())[:5])
+    svc = "".join(f'<a href="servicos.html#{k}">{s["title"]}</a>' for k, s in SERVICES.items())
     return f'''</main>
-<footer class="footer"><div class="wrap foot1">
-<a class="logo" href="index.html">{LOGO}<span class="lt">Flateka</span></a>
-<nav class="foot-links" aria-label="Rodapé">{links}</nav>
-<span class="foot-copy">© <span id="year">2026</span> Flateka · <button data-copy="{EMAIL}" data-msg="E-mail copiado">{EMAIL}</button></span>
+<footer class="footer"><div class="wrap">
+<div class="fcols">
+<div class="fbrand"><a class="logo" href="index.html">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a><p>Atendimento automático, agenda online, avaliações e painéis de dados para empresas.</p></div>
+<div><h4>Serviços</h4>{svc}</div>
+<div><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="servicos.html#como">Como trabalhamos</a><a href="exemplos.html">Exemplos</a><a href="contato.html">Contato</a></div>
+<div><h4>Ajuda</h4><a href="planos.html#faq">Perguntas frequentes</a><a href="planos.html">Planos e preços</a><a href="avulsos.html">Produtos avulsos</a></div>
+<div><h4>Legal</h4><a href="privacidade.html">Política de privacidade</a><a href="termos.html">Termos de uso</a><a href="cookies.html">Política de cookies</a></div>
+</div>
+<div class="fbottom"><span>© <span id="year">2026</span> Flateka. Todos os direitos reservados.</span><button data-copy="https://flateka-b2653.web.app" data-msg="Link copiado">Copiar link do site</button></div>
 </div></footer>
-<button class="totop" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><circle class="ring" cx="24" cy="24" r="21"/></svg>{ico("arrow")}</button>
-<div class="mbar"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">{ico("wa")} Agendar conversa pelo WhatsApp</a></div>
+<a class="wa-float" href="{WA_MSG}" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 2.1.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.1-.3-.2-.6-.3z"/></svg></a>
 <script>window.SERVICES = {json.dumps({k: {kk: vv for kk, vv in v.items() if kk in ("title", "price", "img", "text", "items")} for k, v in SERVICES.items()}, ensure_ascii=False)};</script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
@@ -198,10 +200,21 @@ def page_intro(eyebrow, title, lead):
 '''
 
 
+def chat_thumb():
+    return '''<div class="thumb-chat"><div class="tc-top"><span class="av">S</span><b>Studio Bela Forma</b></div>
+<div class="tc-msg">Oi! Tem horário sábado?</div><div class="tc-msg me">Temos sim: 9h, 10h ou 14h. Qual prefere?</div><div class="tc-msg">10h, por favor</div><div class="tc-msg me">Pronto, reservado. Mandamos lembrete na sexta.</div></div>'''
+
+
+def svc_media(k, w):
+    if k == "atendimento":
+        return chat_thumb()
+    return f'<img src="{u(P_of(k), w)}" alt="" width="{w}" height="{w * 5 // 8}" loading="lazy" decoding="async">'
+
+
 def svc_card(k, wide=False):
     s = SERVICES[k]
     return f'''<button data-cursor="Abrir" class="svc{' wide' if wide else ''}" id="{k}" data-svc="{k}" data-spot data-tilt="3">
-<div class="svc-img skel"><img src="{u(P_of(k), 900)}" alt="" width="900" height="560" loading="lazy" decoding="async"></div>
+<div class="svc-img">{svc_media(k, 700)}</div>
 <div class="svc-body"><div class="svc-top"><span class="svc-ic">{ico(s["icon"])}</span><span class="price-tag">{s["price"]}</span></div>
 <h3>{s["title"]}</h3><p>{s["short"]}</p><span class="more">Ver detalhes {ico("arrow")}</span></div>
 </button>'''
@@ -273,7 +286,7 @@ def dash_mock():
 
 
 def plate_mock(color="azul"):
-    nfc = '<svg viewBox="0 0 64 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16a12 12 0 0 1 0 16M14 12a18 18 0 0 1 0 24M20 8a24 24 0 0 1 0 32"/><rect x="34" y="6" width="18" height="30" rx="3" transform="rotate(12 43 21)"/><path d="M30 44c-2-5 0-10 4-13l6-4M44 46l6-9"/></svg>'
+    nfc = '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M10 13.5a9 9 0 0 1 0 13"/><path d="M16 9.5a15 15 0 0 1 0 21"/><path d="M22 5.5a21 21 0 0 1 0 29"/><path d="M28 2.5a26 26 0 0 1 0 35"/></svg>'
     return f'''<div class="plate-scene"><div class="plate" data-c="{color}" data-tilt="10">
 <div class="pl-top"><span class="stars">★★★★★</span><small class="pl-sub">SUA OPINIÃO É MUITO IMPORTANTE!</small><b class="g">AVALIE NO GOOGLE</b></div>
 <div class="pl-wave"><span class="pl-badge">{ico("star")}</span></div>
@@ -305,7 +318,6 @@ def index():
     s += header("index.html")
     s += f'''<section class="hero"><div class="hero3d" aria-hidden="true"><div class="logo3d">{layers}</div></div><div class="wrap"><div class="hero-grid">
 <div>
-<span class="eyebrow rv">Consultoria digital · 100% online</span><span class="drag-hint">Arraste o símbolo 3D</span>
 <h1 class="split">Sua empresa <span class="hl">atendendo</span> e vendendo mesmo quando você está ocupado</h1>
 <p class="lead rv">Organizamos o digital da sua empresa: WhatsApp que responde sozinho, agenda online, avaliações no Google e números claros para decidir.</p>
 <div class="btns rv"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Agendar conversa gratuita {ico("arrow")}</a><a class="btn ghost" href="#teste">Descobrir o que eu preciso</a></div>
@@ -351,8 +363,8 @@ def index():
 </div>
 </div></section>
 
-<section class="section" id="teste"><div class="wrap"><div class="two">
-<div><span class="eyebrow">Teste rápido</span><h2 class="split">Descubra em 30 segundos por onde começar</h2><p class="lead rv">Duas perguntas e mostramos o plano que mais faz sentido para o seu momento.</p></div>
+<section class="section" id="teste"><div class="wrap"><div class="duo">
+<div class="duo-col"><span class="eyebrow">Teste rápido</span><h2 class="h3">Descubra em 30 segundos por onde começar</h2>
 <div class="panel rv" id="quiz">
 <div class="quiz-steps"><i></i><i></i><i></i></div>
 <div class="q-step" data-k="seg"><h3>Qual é o seu tipo de negócio?</h3><div class="opts">
@@ -369,9 +381,8 @@ def index():
 <div class="btns" style="justify-content:center"><a class="btn q-wa" target="_blank" rel="noopener" href="{WA}">Conversar sobre isso {ico("arrow")}</a></div>
 <button class="back" data-restart>Refazer o teste</button></div>
 </div>
-</div></div></section>
-
-<section class="section"><div class="wrap"><div class="two">
+</div>
+<div class="duo-col"><span class="eyebrow">Calculadora</span><h2 class="h3">Quanto custa demorar para responder?</h2>
 <div class="panel rv" id="calc">
 <div class="field"><label for="c1">Mensagens por dia no WhatsApp <output for="c1"></output></label><input id="c1" type="range" min="5" max="150" value="40"></div>
 <div class="field"><label for="c2">Valor médio de uma venda <output for="c2"></output></label><input id="c2" type="range" min="20" max="800" step="10" value="90" data-money="1"></div>
@@ -379,7 +390,7 @@ def index():
 <div class="calc-out"><small>Você pode estar deixando de vender por mês</small><b id="calc-total">R$ 0</b>
 <p class="note">{ico("doc")} Estimativa do que o seu negócio perde hoje. Não é o preço dos nossos serviços.</p></div>
 </div>
-<div><span class="eyebrow">Calculadora</span><h2 class="split">Quanto custa demorar para responder?</h2><p class="lead rv">Mexa nos controles com os números da sua empresa. A conta considera que 3 em cada 10 conversas viram venda. <span class="info" tabindex="0" data-tip="Referência usada na conta. Ajuste mentalmente para a realidade do seu negócio.">?</span></p></div>
+</div>
 </div></div></section>
 
 <section class="section"><div class="wrap">
@@ -417,8 +428,8 @@ WHO = {
 def svc_row(k):
     sv = SERVICES[k]
     items = "".join(f"<li>{ico('check')}<span>{i}</span></li>" for i in sv["items"])
-    return f'''<article class="srow" id="{k}" data-spot>
-<div class="srow-img skel"><img src="{u(P_of(k), 800)}" alt="" width="800" height="800" loading="lazy" decoding="async"></div>
+    return f'''<article class="srow" id="{k}">
+<div class="srow-img">{svc_media(k, 600)}</div>
 <div class="srow-main"><span class="ic">{ico(sv["icon"])}</span><h3>{sv["title"]}</h3><p class="muted">{WHO[k]}</p><b class="srow-price">{sv["price"]}</b></div>
 <div class="srow-det"><p>{sv["text"]}</p><ul>{items}</ul><a class="btn small" href="{WA}?text={sv["title"].replace(" ", "%20")}%20-%20quero%20saber%20mais" target="_blank" rel="noopener">Quero esse serviço {ico("arrow")}</a></div>
 </article>'''
@@ -431,7 +442,7 @@ def servicos():
     rows = "".join(svc_row(k) for k in ["raiox", "atendimento", "agenda", "placas", "dashboard", "site", "maps"])
     s += f'''<section class="section tight"><div class="wrap"><div class="srows">{rows}</div></div></section>
 
-<section class="section"><div class="wrap">
+<section class="section" id="como"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">Como trabalhamos</span><h2 class="split">Do primeiro papo ao resultado</h2></div></div>
 <div class="steps" data-stagger>
 <div class="step"><span class="ic">{ico("chat")}</span><h3>Conversa</h3><p>Entendemos sua rotina, seus clientes e o que mais trava hoje.</p></div>
@@ -480,7 +491,7 @@ def planos():
     s += page_intro("Planos", 'Escolha o <span class="hl">tamanho certo</span> para agora', "Comece pelo essencial e cresça quando fizer sentido. Sem fidelidade nos planos mensais.")
     s += f'''<section class="section" style="padding-top:20px"><div class="wrap"><div class="plans" data-stagger>{cards}</div>
 <p class="center note" style="justify-content:center;margin-top:30px">{ico("lock")} Valor fechado só depois da conversa. Nada de surpresa na fatura.</p></div></section>
-<section class="section"><div class="wrap"><div class="center" style="margin-bottom:40px"><span class="eyebrow">Dúvidas</span><h2 class="split">Perguntas frequentes</h2></div>
+<section class="section" id="faq"><div class="wrap"><div class="center" style="margin-bottom:24px"><span class="eyebrow">Dúvidas</span><h2 class="split">Perguntas frequentes</h2></div>
 <div class="faq" data-stagger>{"".join(f"<details><summary>{q}<i></i></summary><div class='ans'>{a}</div></details>" for q, a in faq)}</div></div></section>
 '''
     s += cta("Não sabe qual plano escolher?", "Fale com a gente e indicamos o melhor ponto de partida para o seu negócio.")
@@ -558,32 +569,72 @@ def exemplos():
 
 def contato():
     opts = "".join(f"<option>{SERVICES[k]['title']}</option>" for k in SERVICES) + "<option>Ainda não sei</option>"
-    s = head("Contato | Flateka", "Fale com a Flateka pelo WhatsApp ou e-mail.")
+    s = head("Contato | Flateka", "Fale com a Flateka.")
     s += header("contato.html")
-    s += page_intro("Contato", 'Conte o que <span class="hl">você precisa</span>', "Preencha e sua mensagem chega pronta no nosso WhatsApp. Respondemos no mesmo dia.")
-    s += f'''<section class="section" style="padding-top:20px"><div class="wrap"><div class="two" style="align-items:start">
+    s += page_intro("Contato", 'Conte o que <span class="hl">você precisa</span>', "Respondemos no mesmo dia.")
+    s += f'''<section class="section tight"><div class="wrap narrow">
 <form class="panel form rv" id="contact">
 <div class="row"><div class="inp"><label for="f1">Seu nome</label><input id="f1" name="nome" required autocomplete="name"></div>
-<div class="inp"><label for="f2">Empresa</label><input id="f2" name="empresa" autocomplete="organization"></div></div>
-<div class="row"><div class="inp"><label for="f3">Segmento</label><select id="f3" name="segmento"><option>Salão ou clínica</option><option>Restaurante</option><option>Loja</option><option>Serviço ou escritório</option><option>Outro</option></select></div>
+<div class="inp"><label for="f6">WhatsApp ou e-mail</label><input id="f6" name="contato" required autocomplete="email"></div></div>
+<div class="row"><div class="inp"><label for="f2">Empresa</label><input id="f2" name="empresa" autocomplete="organization"></div>
 <div class="inp"><label for="f4">Interesse</label><select id="f4" name="servico">{opts}</select></div></div>
-<div class="inp"><label for="f5">Mensagem</label><textarea id="f5" name="msg" placeholder="Ex.: perco muitos clientes porque demoro para responder"></textarea></div>
-<button class="btn" type="submit">{ico("wa")} Enviar pelo WhatsApp</button>
+<div class="inp"><label for="f5">Mensagem</label><textarea id="f5" name="msg" placeholder="Ex.: perco clientes porque demoro para responder"></textarea></div>
+<input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+<button class="btn" type="submit">Enviar {ico("send")}</button>
 </form>
-<div class="rv"><div class="photo" style="position:relative;aspect-ratio:4/3"><img src="{u(P["cafe"], 1000)}" alt="Dona de cafeteria sorrindo no balcão" loading="lazy"></div>
-<div class="contact-list">
-<a class="c-item" href="{WA_MSG}" target="_blank" rel="noopener"><span class="ic">{ico("wa")}</span><span><small>WhatsApp</small><b>Chamar no WhatsApp</b></span></a>
-<div class="c-item"><span class="ic">{ico("mail")}</span><span><small>E-mail</small><b>{EMAIL}</b></span><button class="copy" data-copy="{EMAIL}" data-msg="E-mail copiado" data-tip="Copiar e-mail" aria-label="Copiar e-mail">{ico("copy")}</button></div>
-<div class="c-item"><span class="ic">{ico("clock")}</span><span><small>Atendimento</small><b>Online, para qualquer cidade</b></span></div>
-</div></div>
-</div></div></section>
+</div></section>
 '''
     s += footer()
     return s
 
 
+def text_page(eyebrow, title, lead, body, desc):
+    s = head(f"{eyebrow} | Flateka", desc) + header("")
+    s += page_intro(eyebrow, title, lead)
+    s += f'<section class="section tight"><div class="wrap narrow prose">{body}</div></section>'
+    return s + footer()
+
+
+def sobre():
+    return text_page("Sobre nós", "Tecnologia simples para empresas venderem mais", "A Flateka organiza o digital de empresas para que elas atendam melhor e decidam com números.",
+        """<h2>O que fazemos</h2><p>Montamos atendimento automático no WhatsApp e no Instagram, agenda online, placas de avaliação com NFC e QR code, painéis em Power BI e sites. Tudo pensado para o dia a dia de quem não tem tempo de ficar no celular.</p>
+<h2>Como pensamos</h2><p>Primeiro entendemos o negócio, depois propomos. Cada entrega vem com explicação clara e acompanhamento, e você fala direto com quem fez o trabalho.</p>
+<h2>Base em dados</h2><p>Nossa formação é em análise de dados e Business Intelligence. Por isso cada serviço termina com números que mostram o que mudou.</p>""",
+        "Quem é a Flateka e como trabalhamos.")
+
+
+def privacidade():
+    return text_page("Política de privacidade", "Política de privacidade", "Última atualização: novembro de 2026.",
+        """<p>Esta política explica como a Flateka trata os dados pessoais de quem usa este site, de acordo com a Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
+<h2>Dados que coletamos</h2><p>Coletamos apenas o que você informa no formulário de contato (nome, WhatsApp ou e-mail, empresa, interesse e mensagem) e o que você envia ao falar conosco pelo WhatsApp.</p>
+<h2>Para que usamos</h2><p>Usamos esses dados somente para responder ao seu contato, preparar propostas e prestar os serviços contratados. Não vendemos nem compartilhamos seus dados para publicidade.</p>
+<h2>Com quem compartilhamos</h2><p>Os dados podem passar por serviços que fazem o site funcionar, como hospedagem (Google Firebase), envio do formulário por e-mail e o WhatsApp. Cada um segue a própria política de privacidade.</p>
+<h2>Por quanto tempo guardamos</h2><p>Guardamos os dados enquanto houver relação comercial ou pelo prazo exigido por lei. Depois disso, eles são apagados.</p>
+<h2>Seus direitos</h2><p>Você pode pedir acesso, correção ou exclusão dos seus dados a qualquer momento pelo formulário da página de contato.</p>""",
+        "Como a Flateka trata seus dados pessoais.")
+
+
+def termos():
+    return text_page("Termos de uso", "Termos de uso", "Última atualização: novembro de 2026.",
+        """<p>Ao usar este site, você concorda com estes termos.</p>
+<h2>Conteúdo do site</h2><p>As informações, preços e exemplos têm caráter informativo. Exemplos com empresas fictícias, como o Studio Bela Forma, servem apenas para ilustrar como os serviços funcionam.</p>
+<h2>Preços</h2><p>Os valores mostrados são faixas de referência. O valor final de cada serviço é confirmado em proposta, depois da conversa inicial.</p>
+<h2>Propriedade</h2><p>Marca, textos e layout deste site pertencem à Flateka. Fotos de banco de imagens seguem a licença de cada autor.</p>
+<h2>Links externos</h2><p>O site pode ter links para outros sites. Não nos responsabilizamos pelo conteúdo deles.</p>
+<h2>Alterações</h2><p>Estes termos podem ser atualizados a qualquer momento, e a data de atualização fica no topo desta página.</p>""",
+        "Termos de uso do site da Flateka.")
+
+
+def cookies():
+    return text_page("Política de cookies", "Política de cookies", "Última atualização: novembro de 2026.",
+        """<p>Cookies são pequenos arquivos guardados no seu navegador.</p>
+<h2>O que usamos hoje</h2><p>Este site não usa cookies de publicidade nem de rastreamento. Podem existir apenas arquivos técnicos necessários para carregar fontes e páginas mais rápido.</p>
+<h2>Se isso mudar</h2><p>Se no futuro usarmos ferramentas de medição de visitas, esta página será atualizada e você poderá escolher se aceita.</p>""",
+        "Como o site da Flateka usa cookies.")
+
+
 if __name__ == "__main__":
-    for name, fn in [("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
+    for name, fn in [("sobre.html", sobre), ("privacidade.html", privacidade), ("termos.html", termos), ("cookies.html", cookies), ("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
                      ("avulsos.html", avulsos), ("exemplos.html", exemplos), ("contato.html", contato)]:
         pg = "" if name == "index.html" else name[:-5]
         (ROOT / name).write_text(fn().replace("__VER__", VER).replace("__PAGE__", pg), encoding="utf-8")
