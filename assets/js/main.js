@@ -572,7 +572,7 @@ void main(){
     document.body.append(toastEl, modal);
     carousel(); background(); header(); motion(); pointerFx(); copyBtns(); tips(); services(); skeletons();
     mockTabs(); quiz(); calc(); plates(); contact();
-    logo3d(); phones(); progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
+    phones(); progress(); transitions(); ripples(); cursorLabel(); compare(); scrollFx();
     const y = $("#year"); if (y) y.textContent = new Date().getFullYear();
   });
 })();

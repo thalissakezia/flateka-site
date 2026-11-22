@@ -171,10 +171,9 @@ def footer():
 <footer class="footer"><div class="wrap">
 <div class="fcols">
 <div class="fbrand"><a class="logo" href="index.html">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a><p>Atendimento automático, agenda online, avaliações e painéis de dados para empresas.</p></div>
-<div><h4>Serviços</h4>{svc}</div>
-<div><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="servicos.html#como">Como trabalhamos</a><a href="exemplos.html">Exemplos</a><a href="contato.html">Contato</a></div>
-<div><h4>Ajuda</h4><a href="planos.html#faq">Perguntas frequentes</a><a href="planos.html">Planos e preços</a><a href="avulsos.html">Produtos avulsos</a></div>
-<div><h4>Legal</h4><a href="privacidade.html">Política de privacidade</a><a href="termos.html">Termos de uso</a><a href="cookies.html">Política de cookies</a></div>
+<div><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="servicos.html#como">Como trabalhamos</a><a href="contato.html">Contato</a></div>
+<div><h4>Ajuda</h4><a href="servicos.html">Serviços</a><a href="planos.html#faq">Perguntas frequentes</a><a href="exemplos.html">Exemplos</a></div>
+<div><h4>Legal</h4><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos de uso</a><a href="cookies.html">Cookies</a></div>
 </div>
 <div class="fbottom"><span>© <span id="year">2026</span> Flateka. Todos os direitos reservados.</span><button data-copy="https://flateka-b2653.web.app" data-msg="Link copiado">Copiar link do site</button></div>
 </div></footer>
@@ -184,8 +183,6 @@ def footer():
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
 <script src="assets/js/main.js?v=__VER__" defer></script>
-<script type="importmap">{{"imports":{{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}}}</script>
-<script type="module" src="assets/js/hero3d.js?v=__VER__"></script>
 </body>
 </html>
 '''
@@ -316,19 +313,22 @@ def index():
     layers = "".join(f'<span style="--z:{i}">{LOGO}</span>' for i in range(14))
     s = head("Flateka | Consultoria digital para empresas", "Atendimento automático, agendamento online, placas de avaliação, painéis em Power BI e sites para empresas.")
     s += header("index.html")
-    s += f'''<section class="hero"><div class="hero3d" aria-hidden="true"><div class="logo3d">{layers}</div></div><div class="wrap"><div class="hero-grid">
+    s += f'''<section class="hero"><div class="wrap"><div class="hero-grid">
 <div>
 <h1 class="split">Sua empresa <span class="hl">atendendo</span> e vendendo mesmo quando você está ocupado</h1>
 <p class="lead rv">Organizamos o digital da sua empresa: WhatsApp que responde sozinho, agenda online, avaliações no Google e números claros para decidir.</p>
 <div class="btns rv"><a class="btn" href="{WA_MSG}" target="_blank" rel="noopener">Agendar conversa gratuita {ico("arrow")}</a><a class="btn ghost" href="#teste">Descobrir o que eu preciso</a></div>
 </div>
-<div class="hcard-dark rv" data-tilt="3">
+<div class="hero-side rv"><div class="hcard-dark">
 <span class="hd-label">Por onde começar</span>
 <strong>Raio-X digital</strong>
 <p>Um diagnóstico do seu Google, Instagram, WhatsApp e site, com nota de 0 a 100 e plano de ação.</p>
 <ul class="hd-list"><li><span>Google e Maps</span><i style="--w:72%"></i></li><li><span>Instagram</span><i style="--w:54%"></i></li><li><span>WhatsApp</span><i style="--w:38%"></i></li><li><span>Site</span><i style="--w:61%"></i></li></ul>
 <div class="hd-foot"><span>a partir de <b>R$ 197</b></span><a class="btn light small" href="servicos.html#raiox">Ver detalhes</a></div>
 <small class="hd-note">Notas ilustrativas</small>
+</div>
+<a class="mini" href="servicos.html#atendimento"><span class="ic">{ico("chat")}</span><span><b>Atendimento automático</b><small>a partir de R$ 250/mês</small></span></a>
+<a class="mini" href="avulsos.html"><span class="ic">{ico("placa")}</span><span><b>Placas NFC e QR</b><small>a partir de R$ 60</small></span></a>
 </div>
 </div>
 
@@ -339,7 +339,7 @@ def index():
 <section class="section"><div class="wrap">
 <div class="sec-head"><div><span class="eyebrow">O que fazemos</span><h2 class="split">Tudo que o seu cliente vê antes de comprar</h2><p class="lead rv">Os mais procurados. Veja todos na página de serviços.</p></div>
 <a class="btn ghost rv" href="servicos.html">Todos os serviços {ico("arrow")}</a></div>
-<div class="services" data-stagger>{svc_card("atendimento")}{svc_card("placas")}{svc_card("dashboard")}</div>
+<div class="services" data-stagger>{svc_card("atendimento")}{svc_card("placas")}{svc_card("dashboard")}{svc_card("site")}</div>
 </div></section>
 
 <section class="section"><div class="wrap">
