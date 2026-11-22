@@ -1,10 +1,38 @@
 {
   "hosting": {
     "public": ".",
-    "ignore": ["firebase.json", "build/**", "README.md", ".github/**", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "build/**",
+      "README.md",
+      ".github/**",
+      "**/.*",
+      "**/node_modules/**",
+      "firestore.rules"
+    ],
     "cleanUrls": true,
     "headers": [
-      { "source": "**/*.@(css|js|svg|png|jpg|webp)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+      {
+        "source": "**/*.@(css|js|svg|png|jpg|webp)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/@(admin|cliente)*",
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex"
+          }
+        ]
+      }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }

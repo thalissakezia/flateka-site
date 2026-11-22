@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function isAdmin() { return request.auth != null && request.auth.token.email in ['flateka.com@gmail.com'] && request.auth.token.email_verified; }
+    function me() { return request.auth != null ? request.auth.token.email.lower() : ''; }
+
+    // contato do site: qualquer pessoa cria, só o admin lê
+    match /leads/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nome','contato','empresa','servico','msg','criado','status'])
+        && request.resource.data.nome is string && request.resource.data.nome.size() < 120
+        && request.resource.data.msg is string && request.resource.data.msg.size() < 2000
+        && request.resource.data.status == 'novo';
+      allow read, update, delete: if isAdmin();
+    }
+    match /clientes/{id} {
+      allow read: if isAdmin() || resource.data.email == me();
+      allow write: if isAdmin();
+    }
+    match /cobrancas/{id} {
+      allow read: if isAdmin() || resource.data.clienteEmail == me();
+      allow write: if isAdmin();
+    }
+    match /relatorios/{id} {
+      allow read: if isAdmin() || resource.data.clienteEmail == me();
+      allow write: if isAdmin();
+    }
+    match /aprovacoes/{id} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

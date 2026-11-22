@@ -171,7 +171,7 @@ def footer():
 <footer class="footer"><div class="wrap">
 <div class="fcols">
 <div class="fbrand"><a class="logo" href="index.html">{LOGO}<span class="lt">Flateka<small>Consultoria digital</small></span></a><p>Atendimento automático, agenda online, avaliações e painéis de dados para empresas.</p></div>
-<div><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="servicos.html#como">Como trabalhamos</a><a href="contato.html">Contato</a></div>
+<div><h4>Empresa</h4><a href="sobre.html">Sobre nós</a><a href="servicos.html#como">Como trabalhamos</a><a href="contato.html">Contato</a><a href="cliente.html">Área do cliente</a></div>
 <div><h4>Ajuda</h4><a href="servicos.html">Serviços</a><a href="planos.html#faq">Perguntas frequentes</a><a href="exemplos.html">Exemplos</a></div>
 <div><h4>Legal</h4><a href="privacidade.html">Privacidade</a><a href="termos.html">Termos de uso</a><a href="cookies.html">Cookies</a></div>
 </div>
@@ -633,7 +633,20 @@ def cookies():
         "Como o site da Flateka usa cookies.")
 
 
+def panel_page(title, script):
+    return f'''<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} | Flateka</title><meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/panel.css?v=__VER__"></head>
+<body><header class="top"><a class="logo" href="index.html">{LOGO}Flateka</a><small>{title}</small></header>
+<div id="app"><div class="loading" style="padding:24px">Carregando...</div></div>
+<script type="module" src="assets/js/{script}?v=__VER__"></script></body></html>
+'''
+
+
 if __name__ == "__main__":
+    (ROOT / "admin.html").write_text(panel_page("Painel administrativo", "admin.js").replace("__VER__", VER), encoding="utf-8")
+    (ROOT / "cliente.html").write_text(panel_page("Área do cliente", "cliente.js").replace("__VER__", VER), encoding="utf-8")
     for name, fn in [("sobre.html", sobre), ("privacidade.html", privacidade), ("termos.html", termos), ("cookies.html", cookies), ("index.html", index), ("servicos.html", servicos), ("planos.html", planos),
                      ("avulsos.html", avulsos), ("exemplos.html", exemplos), ("contato.html", contato)]:
         pg = "" if name == "index.html" else name[:-5]

@@ -427,6 +427,7 @@ void main(){
       try {
         const r = await fetch("https://formsubmit.co/ajax/flateka.com@gmail.com", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body) });
         if (!r.ok) throw 0;
+        import("./fb.js").then(async (fb) => { if (fb.demo) return; await fb.init(); await fb.add("leads", { nome: String(d.get("nome")).slice(0, 110), contato: String(d.get("contato")), empresa: String(d.get("empresa") || ""), servico: String(d.get("servico")), msg: String(d.get("msg") || "").slice(0, 1900), criado: new Date().toISOString().slice(0, 10), status: "novo" }); }).catch(() => {});
         f.reset(); toast("Mensagem enviada. Respondemos em breve.");
       } catch (_) { toast("Não foi possível enviar agora. Tente de novo."); }
       btn.disabled = false; btn.style.opacity = "";
